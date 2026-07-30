@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="A comparison of DQN, REINFORCE, and Advantage Actor-Critic approaches to the CartPole control problem.">
+  <title>DQN, REINFORCE, and A2C for CartPole</title>
+  <link rel="stylesheet" href="./assets/css/styles.css?v=20260727-4">
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="./index.html"><span class="brand-mark" aria-hidden="true"><i></i><b></b></span><span><small>Interactive Reinforcement Learning</small>CartPole // Balance Lab</span></a>
+  <nav aria-label="Primary navigation">
+    <a href="./index.html">Demo</a>
+    <a href="./case-study.html">Case Study</a>
+    <a aria-current="page" href="./article.html">Articles</a>
+    <a href="./project-record.html">Development Record</a>
+    <a class="nav-source" href="./source/Cartpole.ipynb">Open Notebook ↗</a>
+  </nav>
+</header>
+<main class="article-shell">
+<article class="article-card">
+  <p class="eyebrow">Reinforcement Learning Comparison</p>
+  <h1>DQN, REINFORCE, and A2C: Three Ways to Approach CartPole</h1>
+  <p class="lead">CartPole is useful for comparing reinforcement-learning methods because the environment and goal stay the same while the way the agent learns can change completely. My browser demo is based on a Deep Q-Network, but REINFORCE and Advantage Actor-Critic show two other ways to solve the same control problem.</p>
+
+  <h2>The CartPole control problem</h2>
+  <p>The agent receives four values: cart position, cart velocity, pole angle, and pole velocity. It then chooses one of two actions, moving the cart left or right. A strong method has to connect each action to both its immediate result and the effect it may have several steps later.</p>
+
+  <h2>How DQN approaches the problem</h2>
+  <p>DQN is a value-based method. The network predicts a Q-value for each action, and the agent usually chooses the action with the larger predicted value. Experiences are stored in replay memory and sampled later so the network can learn from earlier decisions instead of only the current step.</p>
+  <div class="code-window" aria-label="DQN target calculation">
+    <div class="editor-bar"><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span><strong>DQN target</strong><span>PYTHON</span></div>
+    <pre class="code-editor"><code>q_update = reward + <span class="const">GAMMA</span> * np.<span class="fn">amax</span>(
+    <span class="self">self</span>.model.<span class="fn">predict</span>(state_next)[<span class="num">0</span>]
+)</code></pre>
+    <div class="editor-status"><span>Value-based learning</span><span>Two action values</span></div>
+  </div>
+  <p>This is the approach represented by the original notebook and the interactive browser project.</p>
+
+  <h2>How REINFORCE is different</h2>
+  <p>REINFORCE is a policy-gradient method. Instead of predicting the value of each action, it learns a policy that produces a probability distribution over the available actions. The agent completes an episode, calculates the discounted return for each step, and then adjusts the policy so actions connected to stronger returns become more likely.</p>
+  <pre class="code-editor"><code>for each episode:
+    collect states, actions, and rewards
+    calculate discounted returns
+    normalize returns
+    update the policy using each action and return</code></pre>
+  <p>The method makes policy gradients easier to follow because the connection between an episode’s total return and the policy update is direct. Its main drawback is that it waits until the episode ends before learning. It can also produce high-variance updates because a strong outcome may include both good decisions and lucky ones.</p>
+
+  <h2>How A2C changes the learning process</h2>
+  <p>Advantage Actor-Critic uses two parts. The actor learns which action to choose, while the critic estimates how valuable the current state is. Rather than waiting for a full episode, A2C can update after each step.</p>
+  <div class="formula-card">
+    <div><span>ADVANTAGE</span><small>Actual result compared with the critic's expectation</small></div>
+    <code>advantage = reward + gamma × V(next_state) - V(current_state)</code>
+  </div>
+  <p>The advantage tells the actor whether an action worked better or worse than expected. The actor uses that information to update its policy, and the critic updates its value estimate. This usually makes training more stable than REINFORCE while keeping the flexibility of direct policy learning.</p>
+
+  <h2>Comparing the three methods</h2>
+  <div class="model-table-shell">
+    <div class="model-table-heading"><span>Method Comparison</span><strong>Same environment, different learning process</strong></div>
+    <table class="model-config-table">
+      <thead><tr><th>Method</th><th>What it learns</th><th>When it updates</th><th>Main tradeoff</th></tr></thead>
+      <tbody>
+        <tr><td>DQN</td><td>Value of each action</td><td>From replayed experiences</td><td>Works well with discrete actions but depends on value estimates.</td></tr>
+        <tr><td>REINFORCE</td><td>Action policy</td><td>After a complete episode</td><td>Clear policy-gradient method, but updates can be slow and unstable.</td></tr>
+        <tr><td>A2C</td><td>Policy and state value</td><td>At each step</td><td>More efficient feedback, but requires both actor and critic networks.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Why the comparison matters</h2>
+  <p>The environment does not determine the learning method. CartPole can be solved by estimating action values, optimizing a policy directly, or combining a policy with a value estimate. Looking at all three approaches makes it easier to understand why reinforcement learning includes several families of algorithms instead of one standard solution.</p>
+  <p>For this project, DQN is a practical match because CartPole has two discrete actions and the original implementation already uses replay memory and Q-value prediction. REINFORCE and A2C provide useful comparisons without changing what the finished browser demo actually runs.</p>
+
+  <h2>References</h2>
+  <ul>
+    <li>GeeksforGeeks. (2023). <em>Advantage Actor Critic (A2C) in reinforcement learning.</em></li>
+    <li>Sutton, R. S., &amp; Barto, A. G. (2018). <em>Reinforcement learning: An introduction</em> (2nd ed.). MIT Press.</li>
+    <li>Yoon, D. (2018). <em>REINFORCE: Policy gradient with TensorFlow 2 and PyTorch.</em></li>
+  </ul>
+  <div class="article-actions"><a href="./article.html">Read the DQN Article</a><a href="./index.html">Try the Demo</a><a href="./project-record.html">View Development Record</a></div>
+</article>
+</main>
+<footer class="site-footer"><div><strong>CartPole // Balance Lab</strong><p>An interactive reinforcement-learning experience built from my CartPole-v1 Deep Q-Learning implementation.</p></div><div class="footer-links"><a href="./index.html">Live Demo</a><a href="./article.html">DQN Article</a><a href="./project-record.html">Development Record</a></div><p>© 2026 Alysha Pursley. All rights reserved.</p></footer>
+</body>
+</html>

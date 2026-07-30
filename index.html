@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Explore my interactive CartPole Deep Q-Learning simulation, technical case study, and original development record.">
+  <title>CartPole // Balance Lab</title>
+  <link rel="stylesheet" href="./assets/css/styles.css?v=20260727-4">
+</head>
+<body class="demo-page">
+<div class="page-noise" aria-hidden="true"></div>
+<header class="site-header">
+  <a class="brand" href="./index.html">
+    <span class="brand-mark" aria-hidden="true"><i></i><b></b></span>
+    <span><small>Interactive Reinforcement Learning</small>CartPole // Balance Lab</span>
+  </a>
+  <nav aria-label="Primary navigation">
+    <a aria-current="page" href="./index.html">Live Demo</a>
+    <a href="./case-study.html">Case Study</a>
+    <a href="./article.html">Article</a>
+    <a href="./project-record.html">Development Record</a>
+    <a class="nav-source" href="./source/Cartpole.ipynb">Open Notebook ↗</a>
+  </nav>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="hero-orbit hero-orbit-one" aria-hidden="true"></div>
+    <div class="hero-orbit hero-orbit-two" aria-hidden="true"></div>
+    <div class="hero-copy">
+      <p class="eyebrow"><span>01</span> Interactive DQN Simulation</p>
+      <h1><span>Balance</span> is a moving target.</h1>
+      <p class="hero-text">I rebuilt my original CartPole-v1 work as an interactive browser experience that makes the agent’s decisions visible. Watch it read four changing state values, choose a direction, learn from stored experience, and improve as it completes more episodes.</p>
+      <div class="hero-actions">
+        <button id="startBtn" class="primary-cta" type="button"><span>▶</span> Start Continuous Training</button>
+        <button id="episodeBtn" class="secondary-cta" type="button"><span>01</span> Run One Episode</button>
+      </div>
+      <div class="hero-tags" aria-label="Project technologies">
+        <span>CartPole-v1</span><span>Deep Q-Network</span><span>Replay Memory</span><span>JavaScript Simulation</span>
+      </div>
+    </div>
+
+    <aside class="hero-machine" aria-label="Deep Q-Network settings">
+      <div class="machine-header"><span>DQN MODEL PROFILE</span><b>ONLINE</b></div>
+      <div class="machine-display">
+        <div class="mini-pole" aria-hidden="true"><i></i><b></b><em></em></div>
+        <p>24 → 24 → 2</p>
+        <small>Dense Neural Network</small>
+      </div>
+      <dl>
+        <div><dt>Environment</dt><dd>CartPole-v1</dd></div>
+        <div><dt>Gamma</dt><dd>0.95</dd></div>
+        <div><dt>Learning Rate</dt><dd>0.001</dd></div>
+        <div><dt>Batch Size</dt><dd>20</dd></div>
+        <div><dt>Exploration Decay</dt><dd>0.995</dd></div>
+      </dl>
+      <span class="machine-stamp">MODEL READY</span>
+    </aside>
+  </section>
+
+  <section class="stage-shell" aria-labelledby="stage-title">
+    <div class="stage-header">
+      <div class="stage-title-wrap">
+        <span class="status-light" aria-hidden="true"></span>
+        <div><small>LIVE ENVIRONMENT</small><strong id="statusText">Ready</strong></div>
+      </div>
+      <div class="mode-switch" role="group" aria-label="Control mode">
+        <button class="mode active" id="agentModeBtn" type="button">AI Agent</button>
+        <button class="mode" id="manualModeBtn" type="button">Manual Control</button>
+      </div>
+      <div class="stage-mode"><small>CONTROL MODE</small><strong id="modeText">AI Agent Mode</strong></div>
+    </div>
+
+    <div class="stage-body">
+      <aside class="stage-rail stage-rail-left" aria-hidden="true">
+        <span>+12°</span><i></i><i></i><i></i><b>0°</b><i></i><i></i><i></i><span>−12°</span>
+      </aside>
+      <div class="canvas-frame">
+        <h2 class="sr-only" id="stage-title">CartPole simulation</h2>
+        <canvas id="cartpoleCanvas" width="920" height="520">Your browser does not support canvas.</canvas>
+        <div class="canvas-corner top-left"></div><div class="canvas-corner top-right"></div><div class="canvas-corner bottom-left"></div><div class="canvas-corner bottom-right"></div>
+      </div>
+      <aside class="stage-rail stage-rail-right" aria-hidden="true"><span>FORCE</span><b>← 10N</b><i></i><b>10N →</b></aside>
+    </div>
+
+    <div class="state-ribbon" aria-label="Current environment state">
+      <div><span>01 / Cart Position</span><strong id="cartPosition">0.000</strong><i></i></div>
+      <div><span>02 / Cart Velocity</span><strong id="cartVelocity">0.000</strong><i></i></div>
+      <div><span>03 / Pole Angle</span><strong id="poleAngle">0.000°</strong><i></i></div>
+      <div><span>04 / Pole Velocity</span><strong id="poleVelocity">0.000</strong><i></i></div>
+    </div>
+  </section>
+
+  <section class="command-section" aria-label="Simulation controls">
+    <div class="command-heading">
+      <p class="eyebrow"><span>02</span> Simulation Controls</p>
+      <h2>Run it. Pause it. Push it off balance.</h2>
+      <p>Switch between the trained agent and manual control, then follow the four live state values to see how every left or right movement affects the system.</p>
+    </div>
+    <div class="command-panel">
+      <div class="control-buttons">
+        <button id="pauseBtn" class="command-button pause" type="button"><span>Ⅱ</span><b>Pause</b><small>Freeze current run</small></button>
+        <button id="resetBtn" class="command-button reset" type="button"><span>↻</span><b>Reset</b><small>Clear training state</small></button>
+        <button id="clearLogBtn" class="command-button clear" type="button"><span>⌫</span><b>Clear Log</b><small>Keep metrics intact</small></button>
+      </div>
+      <div class="manual-controls" id="manualControls" hidden>
+        <p>Manual input is active. Use the arrow keys or press either force control.</p>
+        <div><button id="leftBtn" type="button">← Apply Left Force</button><button id="rightBtn" type="button">Apply Right Force →</button></div>
+      </div>
+      <div class="formula-card">
+        <div><span>Q-VALUE UPDATE</span><small>Immediate reward + discounted future value</small></div>
+        <code>q_update = reward + GAMMA × max(Q(next_state))</code>
+      </div>
+    </div>
+  </section>
+
+  <section class="metric-zone" aria-label="Training metrics">
+    <div class="metric-intro"><p class="eyebrow"><span>03</span> Learning Telemetry</p><h2>Six numbers tell the story.</h2></div>
+    <div class="metric-board">
+      <article class="metric-coral"><span>Episode</span><strong id="episodeCount">0</strong><small>Completed runs</small></article>
+      <article class="metric-cyan"><span>Current Score</span><strong id="scoreValue">0</strong><small>Steps survived</small></article>
+      <article class="metric-lime"><span>100-Run Average</span><strong id="averageScore">0.0</strong><small>Solve goal: 195</small></article>
+      <article class="metric-violet"><span>Best Score</span><strong id="bestScore">0</strong><small>Maximum: 500</small></article>
+      <article class="metric-yellow"><span>Exploration</span><strong id="epsilonValue">1.000</strong><small>Random action rate</small></article>
+      <article class="metric-blue"><span>Replay Memory</span><strong id="memoryValue">0</strong><small>Stored experiences</small></article>
+    </div>
+  </section>
+
+  <section class="results-grid">
+    <article class="chart-card">
+      <header><div><p class="eyebrow"><span>04</span> Learning Curve</p><h2>Episode Scores</h2></div><span class="goal-chip">GOAL // 195 AVG</span></header>
+      <canvas id="scoreChart" width="900" height="300"></canvas>
+      <footer class="chart-footer"><span>0 RUNS</span><i></i><span>100-RUN WINDOW</span></footer>
+    </article>
+    <article class="log-card">
+      <header><p class="eyebrow"><span>05</span> Run Output</p><h2>Training Log</h2></header>
+      <ol id="trainingLog" aria-live="polite"><li>Simulation initialized. The agent is ready.</li></ol>
+      <div class="log-footer"><span class="blink-dot"></span> LIVE EVENT STREAM</div>
+    </article>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div><strong>CartPole // Balance Lab</strong><p>An interactive reinforcement-learning experience built from my CartPole-v1 Deep Q-Learning implementation.</p></div>
+  <div class="footer-links"><a href="./case-study.html">Case Study</a><a href="./article.html">Article</a><a href="./project-record.html">Development Record</a></div>
+  <p>© 2026 Alysha Pursley. All rights reserved.</p>
+</footer>
+<script src="./assets/js/cartpole-env.js"></script>
+<script src="./assets/js/dqn-agent.js"></script>
+<script src="./assets/js/app.js"></script>
+</body>
+</html>

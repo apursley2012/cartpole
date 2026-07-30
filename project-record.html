@@ -1,0 +1,181 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="CartPole source code, model configuration, parameter testing, and recorded Deep Q-Learning results."><title>CartPole Development Record</title><link rel="stylesheet" href="./assets/css/styles.css?v=20260727-4"></head><body><header class="site-header"><a class="brand" href="./index.html"><span class="brand-mark" aria-hidden="true"><i></i><b></b></span><span><small>Interactive Reinforcement Learning</small>CartPole // Balance Lab</span></a><nav aria-label="Primary navigation"><a href="./index.html">Demo</a><a href="./case-study.html">Case Study</a><a href="./article.html">Article</a><a aria-current="page" href="./project-record.html">Development Record</a><a class="nav-source" href="./source/Cartpole.ipynb">Open Notebook ↗</a></nav></header><main class="article-shell wide"><article class="article-card"><p class="eyebrow">Code, Tests, and Results</p><h1>Inside the CartPole Build</h1><p class="lead">This page presents the useful parts of my notebook, model configuration, training loop, parameter tests, and recorded output in readable editor panels. The code comes from the preserved source, and the terminal panels retain the documented training results.</p>
+
+<section class="record-section">
+  <h2>Workspace and dependencies</h2>
+  <p>The notebook imports Gym for the environment, NumPy for state and value operations, Keras for the dense network, and a separate score logger for run history.</p>
+  <div class="workspace-window" aria-label="CartPole workspace and Python imports">
+    <div class="editor-bar"><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span><strong>cartpole-control-lab</strong><span>WORKSPACE</span></div>
+    <div class="workspace-layout">
+      <pre class="code-editor"><code><span class="ln">01</span><span class="kw">import</span> random
+<span class="ln">02</span><span class="kw">import</span> gym
+<span class="ln">03</span><span class="kw">import</span> numpy <span class="kw">as</span> np
+<span class="ln">04</span><span class="kw">from</span> collections <span class="kw">import</span> deque
+<span class="ln">05</span><span class="kw">from</span> keras.models <span class="kw">import</span> Sequential
+<span class="ln">06</span><span class="kw">from</span> keras.layers <span class="kw">import</span> Dense
+<span class="ln">07</span><span class="kw">from</span> keras.optimizers <span class="kw">import</span> Adam
+<span class="ln">08</span>
+<span class="ln">09</span><span class="kw">from</span> scores.score_logger <span class="kw">import</span> ScoreLogger</code></pre>
+    </div>
+    <div class="editor-status"><span>Cartpole.ipynb</span><span>UTF-8&nbsp;&nbsp; Python 3</span></div>
+  </div>
+</section>
+
+<section class="record-section">
+  <h2>Training configuration</h2>
+  <p>These are the baseline values stored in the notebook and represented by the model profile on the interactive page.</p>
+  <div class="code-window">
+    <div class="editor-bar"><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span><strong>Cartpole.ipynb — configuration</strong><span>BASELINE</span></div>
+    <pre class="code-editor"><code><span class="const">ENV_NAME</span> = <span class="str">"CartPole-v1"</span>
+
+<span class="const">GAMMA</span> = <span class="num">0.95</span>
+<span class="const">LEARNING_RATE</span> = <span class="num">0.001</span>
+
+<span class="const">MEMORY_SIZE</span> = <span class="num">1000000</span>
+<span class="const">BATCH_SIZE</span> = <span class="num">20</span>
+
+<span class="const">EXPLORATION_MAX</span> = <span class="num">1.0</span>
+<span class="const">EXPLORATION_MIN</span> = <span class="num">0.01</span>
+<span class="const">EXPLORATION_DECAY</span> = <span class="num">0.995</span></code></pre>
+    <div class="editor-status"><span>9 settings</span><span>Baseline profile</span></div>
+  </div>
+</section>
+
+<section class="record-section">
+  <h2>Network architecture</h2>
+  <p>The solver uses two 24-unit ReLU layers and a two-value linear output layer. Those outputs represent the predicted value of moving left or right.</p>
+  <div class="code-window">
+    <div class="editor-bar"><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span><strong>DQNSolver.__init__</strong><span>PYTHON</span></div>
+    <pre class="code-editor"><code><span class="kw">class</span> <span class="type">DQNSolver</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="self">self</span>, observation_space, action_space):
+        <span class="self">self</span>.exploration_rate = <span class="const">EXPLORATION_MAX</span>
+        <span class="self">self</span>.action_space = action_space
+        <span class="self">self</span>.memory = <span class="fn">deque</span>(maxlen=<span class="const">MEMORY_SIZE</span>)
+
+        <span class="self">self</span>.model = <span class="fn">Sequential</span>()
+        <span class="self">self</span>.model.<span class="fn">add</span>(<span class="fn">Dense</span>(<span class="num">24</span>, input_shape=(observation_space,), activation=<span class="str">"relu"</span>))
+        <span class="self">self</span>.model.<span class="fn">add</span>(<span class="fn">Dense</span>(<span class="num">24</span>, activation=<span class="str">"relu"</span>))
+        <span class="self">self</span>.model.<span class="fn">add</span>(<span class="fn">Dense</span>(<span class="self">self</span>.action_space, activation=<span class="str">"linear"</span>))
+        <span class="self">self</span>.model.<span class="fn">compile</span>(loss=<span class="str">"mse"</span>, optimizer=<span class="fn">Adam</span>(lr=<span class="const">LEARNING_RATE</span>))</code></pre>
+  </div>
+</section>
+
+<section class="record-section">
+  <h2>Action selection and replay memory</h2>
+  <p>The agent sometimes explores with a random action. Otherwise, it predicts both Q-values and selects the larger one. Stored transitions are sampled in batches so the network can learn from earlier decisions.</p>
+  <div class="editor-grid">
+    <div class="code-window">
+      <div class="editor-bar"><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span><strong>act()</strong><span>EPSILON-GREEDY</span></div>
+      <pre class="code-editor"><code><span class="kw">def</span> <span class="fn">act</span>(<span class="self">self</span>, state):
+    <span class="kw">if</span> np.random.<span class="fn">rand</span>() &lt; <span class="self">self</span>.exploration_rate:
+        <span class="kw">return</span> random.<span class="fn">randrange</span>(<span class="self">self</span>.action_space)
+
+    q_values = <span class="self">self</span>.model.<span class="fn">predict</span>(state)
+    <span class="kw">return</span> np.<span class="fn">argmax</span>(q_values[<span class="num">0</span>])</code></pre>
+    </div>
+    <div class="code-window">
+      <div class="editor-bar"><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span><strong>remember()</strong><span>REPLAY MEMORY</span></div>
+      <pre class="code-editor"><code><span class="kw">def</span> <span class="fn">remember</span>(<span class="self">self</span>, state, action, reward, next_state, done):
+    <span class="self">self</span>.memory.<span class="fn">append</span>((
+        state,
+        action,
+        reward,
+        next_state,
+        done
+    ))</code></pre>
+    </div>
+  </div>
+</section>
+
+<section class="record-section">
+  <h2>Q-value update</h2>
+  <p>For non-terminal states, the target combines the immediate reward with the strongest predicted value available from the next state.</p>
+  <div class="code-window">
+    <div class="editor-bar"><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span><strong>experience_replay()</strong><span>DQN UPDATE</span></div>
+    <pre class="code-editor"><code><span class="kw">if</span> <span class="fn">len</span>(<span class="self">self</span>.memory) &lt; <span class="const">BATCH_SIZE</span>:
+    <span class="kw">return</span>
+
+batch = random.<span class="fn">sample</span>(<span class="self">self</span>.memory, <span class="const">BATCH_SIZE</span>)
+<span class="kw">for</span> state, action, reward, state_next, terminal <span class="kw">in</span> batch:
+    q_update = reward
+    <span class="kw">if not</span> terminal:
+        q_update = reward + <span class="const">GAMMA</span> * np.<span class="fn">amax</span>(
+            <span class="self">self</span>.model.<span class="fn">predict</span>(state_next)[<span class="num">0</span>]
+        )
+
+    q_values = <span class="self">self</span>.model.<span class="fn">predict</span>(state)
+    q_values[<span class="num">0</span>][action] = q_update
+    <span class="self">self</span>.model.<span class="fn">fit</span>(state, q_values, verbose=<span class="num">0</span>)</code></pre>
+  </div>
+</section>
+
+<section class="record-section">
+  <h2>Parameter tests</h2>
+  <p>I tested a larger gamma value to give future rewards more weight and separately increased the learning rate to compare the effect of a much larger update step.</p>
+  <div class="editor-grid">
+    <div class="code-window">
+      <div class="editor-bar"><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span><strong>gamma-test.py</strong><span>EXPERIMENT 01</span></div>
+      <pre class="code-editor"><code><span class="cm"># Increased from the 0.95 baseline</span>
+<span class="const">GAMMA</span> = <span class="num changed">0.995</span>
+
+<span class="cm"># Expected: stronger long-term decisions,</span>
+<span class="cm"># with the possibility of slower convergence.</span></code></pre>
+    </div>
+    <div class="code-window">
+      <div class="editor-bar"><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span><strong>learning-rate-test.py</strong><span>EXPERIMENT 02</span></div>
+      <pre class="code-editor"><code><span class="cm"># Increased from the 0.001 baseline</span>
+<span class="const">LEARNING_RATE</span> = <span class="num changed">0.1</span></code></pre>
+    </div>
+  </div>
+</section>
+
+<section class="record-section">
+  <h2>Minimum-exploration experiment</h2>
+  <p>I also tested whether raising the minimum exploration rate would prevent the agent from settling too early on a limited strategy. For this experiment, I increased <code>EXPLORATION_MIN</code> from <code>0.01</code> to <code>0.02</code> and kept the other baseline values unchanged.</p>
+  <div class="editor-grid">
+    <div class="code-window">
+      <div class="editor-bar"><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span><strong>exploration-min-test.py</strong><span>EXPERIMENT 03</span></div>
+      <pre class="code-editor"><code><span class="const">EXPLORATION_MAX</span> = <span class="num">1.0</span>
+<span class="const">EXPLORATION_MIN</span> = <span class="num changed">0.02</span>
+<span class="const">EXPLORATION_DECAY</span> = <span class="num">0.995</span>
+<span class="const">LEARNING_RATE</span> = <span class="num">0.001</span>
+<span class="const">GAMMA</span> = <span class="num">0.95</span></code></pre>
+    </div>
+    <div class="terminal-window">
+      <div class="terminal-bar"><span>EXPERIMENT 03</span><span>completed</span></div>
+      <pre><code>Episodes completed: <span class="ok">440</span>
+Solve point: run <span class="ok">340</span>
+Maximum score: <span class="max">500</span>
+Late-stage average: <span class="ok">over 190</span>
+Minimum observed score: 8</code></pre>
+    </div>
+  </div>
+  <p>The agent learned more gradually, became stable above 180 at approximately run 150, and maintained strong averages through the final 100 or more runs. Occasional low episodes still occurred, but the higher exploration floor helped the model recover without lowering its overall late-stage performance.</p>
+</section>
+
+<section class="record-section">
+  <h2>Recorded training output</h2>
+  <p>The retained results show three solved runs. The model reached the required 195 rolling average and recorded the maximum CartPole-v1 score of 500.</p>
+  <div class="terminal-grid">
+    <div class="terminal-window">
+      <div class="terminal-bar"><span>GAMMA 0.995</span><span>python</span></div>
+      <pre><code><span class="prompt">In [2]:</span> cartpole()
+Run: 189, exploration: 0.01
+Scores: min 16, avg <span class="ok">195.38</span>
+<span class="success">SOLVED</span> in 89 runs, 189 total runs.</code></pre>
+    </div>
+    <div class="terminal-window">
+      <div class="terminal-bar"><span>RECORDED RUN 01</span><span>python</span></div>
+      <pre><code>Average: <span class="ok">197.25</span>
+Maximum score: <span class="max">500</span>
+<span class="success">SOLVED</span> in 99 runs, 199 total runs.</code></pre>
+    </div>
+    <div class="terminal-window">
+      <div class="terminal-bar"><span>RECORDED RUN 02</span><span>python</span></div>
+      <pre><code>Average: <span class="ok">199.43</span>
+Maximum score: <span class="max">500</span>
+<span class="success">SOLVED</span> in 39 runs, 139 total runs.</code></pre>
+    </div>
+  </div>
+</section>
+
+<div class="article-actions"><a href="./source/Cartpole.ipynb">Open Source Notebook</a><a href="./case-study.html">Read Case Study</a><a href="./index.html">Try the Demo</a></div></article></main><footer class="site-footer"><div><strong>CartPole // Balance Lab</strong><p>An interactive reinforcement-learning experience built from my CartPole-v1 Deep Q-Learning implementation.</p></div><div class="footer-links"><a href="./index.html">Live Demo</a><a href="./case-study.html">Case Study</a><a href="./article.html">Technical Article</a></div><p>© 2026 Alysha Pursley. All rights reserved.</p></footer></body></html>

@@ -1,0 +1,108 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="How I transformed a CartPole Deep Q-Learning implementation into an interactive browser experience."><title>CartPole Case Study</title><link rel="stylesheet" href="./assets/css/styles.css?v=20260727-4"></head><body><header class="site-header"><a class="brand" href="./index.html"><span class="brand-mark" aria-hidden="true"><i></i><b></b></span><span><small>Interactive Reinforcement Learning</small>CartPole // Balance Lab</span></a><nav aria-label="Primary navigation"><a href="./index.html">Demo</a><a aria-current="page" href="./case-study.html">Case Study</a><a href="./article.html">Article</a><a href="./project-record.html">Development Record</a><a class="nav-source" href="./source/Cartpole.ipynb">Open Notebook ↗</a></nav></header><main class="article-shell"><article class="article-card">
+<p class="eyebrow">Case Study</p><h1>From Notebook Output to an Experience People Can Use</h1>
+<p class="lead">The original implementation worked, but most of its value was hidden inside notebook cells, console output, and score logs. My goal for this version was not to disguise that work as a new product. I wanted to give it a professional front end that makes the behavior easier to explore while keeping the original implementation available.</p>
+<h2>The problem I wanted to solve</h2>
+<p>A completed machine-learning notebook can be difficult to evaluate quickly. A visitor has to understand the environment, locate the important settings, and interpret pages of code and output before seeing what the work accomplishes. That is too much friction for a portfolio piece.</p>
+<p>I needed a browser-based version that could communicate the project on its own: what the agent sees, what it can do, how training changes over time, and how the displayed behavior relates to the source work.</p>
+<div class="code-window" aria-label="CartPole notebook model configuration">
+  <div class="editor-bar"><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span><strong>Cartpole.ipynb</strong><span>PYTHON</span></div>
+  <pre class="code-editor"><code><span class="ln">01</span><span class="kw">class</span> <span class="type">DQNSolver</span>:
+<span class="ln">02</span>    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="self">self</span>, observation_space, action_space):
+<span class="ln">03</span>        <span class="self">self</span>.exploration_rate = <span class="const">EXPLORATION_MAX</span>
+<span class="ln">04</span>        <span class="self">self</span>.memory = <span class="fn">deque</span>(maxlen=<span class="const">MEMORY_SIZE</span>)
+<span class="ln">05</span>
+<span class="ln">06</span>        <span class="self">self</span>.model = <span class="fn">Sequential</span>()
+<span class="ln">07</span>        <span class="self">self</span>.model.<span class="fn">add</span>(<span class="fn">Dense</span>(<span class="num">24</span>, input_shape=(observation_space,), activation=<span class="str">"relu"</span>))
+<span class="ln">08</span>        <span class="self">self</span>.model.<span class="fn">add</span>(<span class="fn">Dense</span>(<span class="num">24</span>, activation=<span class="str">"relu"</span>))
+<span class="ln">09</span>        <span class="self">self</span>.model.<span class="fn">add</span>(<span class="fn">Dense</span>(action_space, activation=<span class="str">"linear"</span>))
+<span class="ln">10</span>        <span class="self">self</span>.model.<span class="fn">compile</span>(loss=<span class="str">"mse"</span>, optimizer=<span class="fn">Adam</span>(lr=<span class="const">LEARNING_RATE</span>))</code></pre>
+  <div class="editor-status"><span>Ln 10, Col 88</span><span>UTF-8&nbsp;&nbsp; Python 3</span></div>
+</div>
+<h2>Separating the source from the showcase</h2>
+<p>I treated the Python notebook as the source implementation and the website as its presentation layer. The original notebook, <code>scores</code> directory, and <code>score_logger.py</code> helper remain available rather than being replaced by the JavaScript version. That separation lets visitors inspect the actual work while still having an immediate way to interact with its main ideas.</p>
+<div class="workspace-window" aria-label="CartPole source workspace">
+  <div class="editor-bar"><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span><strong>EXPLORER</strong><span>CARTPOLE</span></div>
+  <div class="workspace-layout">
+    <pre class="code-editor"><code><span class="kw">import</span> random
+<span class="kw">import</span> gym
+<span class="kw">import</span> numpy <span class="kw">as</span> np
+<span class="kw">from</span> collections <span class="kw">import</span> deque
+<span class="kw">from</span> keras.models <span class="kw">import</span> Sequential
+<span class="kw">from</span> keras.layers <span class="kw">import</span> Dense
+<span class="kw">from</span> keras.optimizers <span class="kw">import</span> Adam
+
+<span class="kw">from</span> scores.score_logger <span class="kw">import</span> ScoreLogger</code></pre>
+  </div>
+  <div class="editor-status"><span>Source preserved</span><span>Static showcase</span></div>
+</div>
+<h2>Deciding what the interface needed to show</h2>
+<p>I centered the interface on the information that explains the agent’s behavior without forcing someone to read the code first. The four state values sit directly below the simulation. Training metrics show the episode count, current score, rolling average, best score, exploration rate, and replay-memory size. A score chart and event log provide the longer view.</p>
+<p>I also exposed the original model configuration near the top of the page so the technical context is visible without interrupting the simulation.</p>
+<div class="model-table-shell">
+  <div class="model-table-heading"><span>Model Configuration</span><strong>CartPole-v1 Baseline</strong></div>
+  <table class="model-config-table">
+    <thead><tr><th>Setting</th><th>Original value</th><th>Role</th></tr></thead>
+    <tbody>
+      <tr><td>Environment</td><td>CartPole-v1</td><td>Provides four state values and two possible actions.</td></tr>
+      <tr><td>Gamma</td><td>0.95</td><td>Controls how strongly future rewards affect the Q-value update.</td></tr>
+      <tr><td>Learning rate</td><td>0.001</td><td>Controls the size of model updates.</td></tr>
+      <tr><td>Replay memory</td><td>1,000,000</td><td>Stores previous state transitions.</td></tr>
+      <tr><td>Batch size</td><td>20</td><td>Sets the number of experiences sampled during replay.</td></tr>
+      <tr><td>Exploration</td><td>1.0 to 0.01</td><td>Moves the agent from random exploration toward learned action choices.</td></tr>
+      <tr><td>Exploration decay</td><td>0.995</td><td>Gradually reduces random actions.</td></tr>
+      <tr><td>Network</td><td>24 ReLU, 24 ReLU, 2 linear</td><td>Predicts a value for moving left and moving right.</td></tr>
+    </tbody>
+  </table>
+</div>
+<h2>Translating the behavior for the browser</h2>
+<p>GitHub Pages cannot execute the Python, Gym, and Keras workflow directly, so I recreated the CartPole physics and dense-layer behavior in vanilla JavaScript. I kept the same basic state-action-reward loop, experience replay, exploration decay, and score tracking, then connected those values to the interface in real time.</p>
+<p>The manual-control option was a deliberate addition. Letting someone try to balance the pole with the arrow keys gives the agent’s task immediate context. The visitor can feel how quickly one correction creates the need for another, then switch back to the agent and watch the same problem through the training data.</p>
+<h2>Using the recorded results responsibly</h2>
+<p>The website does not present its JavaScript recreation as if it were running the original Keras model. The completed training results belong to the preserved notebook and are shown as supporting evidence. One gamma test reached a <code>195.38</code> average, and the recorded completed runs reached <code>197.25</code> and <code>199.43</code>.</p>
+<div class="editor-grid">
+  <div class="code-window">
+    <div class="editor-bar"><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span><strong>experiment-gamma.py</strong><span>MODIFIED</span></div>
+    <pre class="code-editor"><code><span class="cm"># Test stronger weighting of future rewards</span>
+<span class="const">ENV_NAME</span> = <span class="str">"CartPole-v1"</span>
+<span class="const">GAMMA</span> = <span class="num changed">0.995</span>  <span class="cm"># changed from 0.95</span>
+<span class="const">LEARNING_RATE</span> = <span class="num">0.001</span>
+<span class="const">BATCH_SIZE</span> = <span class="num">20</span>
+<span class="const">EXPLORATION_DECAY</span> = <span class="num">0.995</span></code></pre>
+  </div>
+  <div class="terminal-window">
+    <div class="terminal-bar"><span>TERMINAL</span><span>cartpole — python</span></div>
+    <pre><code><span class="prompt">In [2]:</span> cartpole()
+Run: 189, exploration: 0.01
+Scores: min 16, avg <span class="ok">195.38</span>
+
+<span class="success">SOLVED</span> in 89 runs, 189 total runs.</code></pre>
+  </div>
+</div>
+<p>I kept the separate learning-rate test in the development record as well. It documents part of the testing process without implying that the larger <code>0.1</code> value became the final browser configuration.</p>
+<p>A third experiment increased the minimum exploration rate from <code>0.01</code> to <code>0.02</code> while leaving the other baseline settings unchanged. The agent solved the environment at run 340, completed 440 episodes, reached a maximum score of 500, and maintained late-stage averages over 190. I included that result because it shows how continued exploration affected consistency and recovery during later training.</p>
+<div class="code-window">
+  <div class="editor-bar"><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span><strong>experiment-learning-rate.py</strong><span>COMPARISON</span></div>
+  <pre class="code-editor"><code><span class="cm"># Baseline used by the browser profile</span>
+<span class="const">LEARNING_RATE</span> = <span class="num">0.001</span>
+
+<span class="cm"># Separate parameter test preserved in the development record</span>
+<span class="const">LEARNING_RATE</span> = <span class="num changed">0.1</span></code></pre>
+</div>
+<div class="terminal-grid">
+  <div class="terminal-window">
+    <div class="terminal-bar"><span>RECORDED RUN 01</span><span>completed</span></div>
+    <pre><code>Scores: avg <span class="ok">197.25</span>, max <span class="max">500</span>
+<span class="success">SOLVED</span> in 99 runs, 199 total runs.</code></pre>
+  </div>
+  <div class="terminal-window">
+    <div class="terminal-bar"><span>RECORDED RUN 02</span><span>completed</span></div>
+    <pre><code>Scores: avg <span class="ok">199.43</span>, max <span class="max">500</span>
+<span class="success">SOLVED</span> in 39 runs, 139 total runs.</code></pre>
+  </div>
+</div>
+<h2>The finished result</h2>
+<p>The final site works as more than a wrapper around old files. It gives the project a clear entry point, provides a live demonstration, explains the technical concepts separately, and keeps the original evidence accessible for anyone who wants to look deeper.</p>
+<div class="callout"><strong>My approach:</strong> preserve the source, be clear about what the browser version recreates, and let the interface demonstrate the work before asking a visitor to read the documentation.</div>
+<h2>Skills represented</h2><ul><li>Reinforcement-learning implementation and parameter testing.</li><li>JavaScript translation of physics and neural-network behavior.</li><li>Interactive data visualization and real-time interface updates.</li><li>Responsive front-end design for a technical portfolio audience.</li><li>Clear separation between source evidence, technical explanation, and public-facing demonstration.</li></ul>
+<div class="article-actions"><a href="./index.html">Try the Interactive Demo</a><a href="./project-record.html">View Development Record</a><a href="./source/Cartpole.ipynb">Open Original Notebook</a></div>
+</article></main><footer class="site-footer"><div><strong>CartPole // Balance Lab</strong><p>An interactive reinforcement-learning experience built from my CartPole-v1 Deep Q-Learning implementation.</p></div><div class="footer-links"><a href="./index.html">Live Demo</a><a href="./article.html">Technical Article</a><a href="./project-record.html">Development Record</a></div><p>© 2026 Alysha Pursley. All rights reserved.</p></footer></body></html>
