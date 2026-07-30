@@ -1,0 +1,63 @@
+/* CartPole Control Lab: specific ML-lab interface, not shared with other projects */
+:root {
+  --ink: #101820;
+  --panel: #17212D;
+  --panel-soft: #223041;
+  --line: #314153;
+  --page: #0D141B;
+  --text: #F3F7FA;
+  --muted: #A8B7C4;
+  --teal: #55D6BE;
+  --blue: #7BB8FF;
+  --cream: #F7F2E8;
+  --cart: #4E6BFF;
+  --pole: #F2C14E;
+  --danger: #E35D6A;
+  --shadow: #00000055;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; font-family: Inter, Arial, sans-serif; background: var(--page); color: var(--text); }
+.lab-page::before { content: ""; position: fixed; inset: 0; background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px); background-size: 42px 42px; opacity: .22; pointer-events: none; }
+a { color: inherit; }
+.lab-shell-header { position: sticky; top: 0; z-index: 10; display: flex; justify-content: space-between; gap: 1rem; align-items: center; padding: 1rem clamp(1rem, 3vw, 2.5rem); background: #0D141BEE; border-bottom: 1px solid var(--line); backdrop-filter: blur(14px); }
+.lab-name { display: inline-flex; align-items: center; gap: .7rem; text-decoration: none; font-weight: 850; letter-spacing: .02em; }
+.lab-dot { width: .85rem; height: .85rem; border-radius: 999px; background: var(--teal); box-shadow: 0 0 0 .35rem #55D6BE22; }
+.lab-nav { display: flex; gap: .45rem; flex-wrap: wrap; }
+.lab-nav a { text-decoration: none; border: 1px solid var(--line); border-radius: 999px; padding: .65rem 1rem; color: var(--muted); background: #17212D99; }
+.lab-nav a[aria-current="page"], .lab-nav a:hover { color: var(--text); border-color: var(--teal); }
+.lab-workspace { position: relative; width: min(1500px, 100%); margin: 0 auto; padding: clamp(1rem, 2vw, 2rem); display: grid; grid-template-columns: 330px minmax(420px, 1fr) 270px; grid-template-areas: "side stage metrics" "side log metrics"; gap: 1.25rem; }
+.lab-sidebar, .experiment-stage, .metric-panel, .run-log { background: var(--panel); border: 1px solid var(--line); border-radius: 24px; box-shadow: 0 22px 50px var(--shadow); }
+.lab-sidebar { grid-area: side; padding: 1.35rem; align-self: start; }
+.eyebrow { color: var(--teal); text-transform: uppercase; letter-spacing: .18em; font-size: .72rem; font-weight: 850; }
+h1 { font-size: clamp(2.2rem, 4vw, 4rem); line-height: .95; margin: .8rem 0 1rem; letter-spacing: -.07em; }
+.intro { color: var(--muted); line-height: 1.65; }
+.button-stack { display: grid; gap: .75rem; margin: 1.4rem 0; }
+button { appearance: none; border: 0; border-radius: 16px; padding: 1rem; font-weight: 850; color: var(--ink); background: var(--teal); cursor: pointer; }
+button:nth-child(2) { background: var(--blue); }
+button:nth-child(3) { background: var(--panel-soft); color: var(--text); border: 1px solid var(--line); }
+button:nth-child(4) { background: var(--danger); color: #FFFFFF; }
+.formula-card { margin-top: 1rem; padding: 1rem; border: 1px solid #55D6BE44; border-radius: 18px; background: #55D6BE11; }
+.formula-card h2 { margin: 0 0 .7rem; font-size: 1rem; }
+.formula-card code { display: block; padding: .8rem; border-radius: 12px; background: #0D141B; color: #D5FFF6; line-height: 1.5; overflow-x: auto; }
+.experiment-stage { grid-area: stage; overflow: hidden; }
+.stage-toolbar { display: flex; justify-content: space-between; gap: 1rem; padding: 1rem 1.2rem; border-bottom: 1px solid var(--line); color: var(--muted); font-weight: 800; }
+#cartpoleCanvas { display: block; width: 100%; height: auto; background: var(--cream); }
+.metric-panel { grid-area: metrics; padding: 1rem; display: grid; gap: .9rem; align-self: start; }
+.metric-panel article { padding: 1rem; border: 1px solid var(--line); border-radius: 18px; background: var(--panel-soft); }
+.metric-panel span { display: block; color: var(--muted); text-transform: uppercase; letter-spacing: .12em; font-size: .72rem; font-weight: 850; margin-bottom: .45rem; }
+.metric-panel strong { display: block; font-size: 2rem; }
+.run-log { grid-area: log; padding: 1rem; min-height: 230px; }
+.log-heading { display: flex; justify-content: space-between; gap: 1rem; align-items: baseline; border-bottom: 1px solid var(--line); padding-bottom: .8rem; margin-bottom: .8rem; }
+.log-heading h2 { margin: 0; }
+.log-heading span { color: var(--blue); font-weight: 800; }
+#trainingLog { margin: 0; padding-left: 1.4rem; color: var(--muted); line-height: 1.8; max-height: 190px; overflow: auto; }
+.article-shell { width: min(980px, 100%); margin: 0 auto; padding: clamp(1rem, 4vw, 3rem); }
+.article-card { background: #F7F2E8; color: #1F2933; border-radius: 28px; padding: clamp(1.25rem, 4vw, 3rem); box-shadow: 0 24px 60px var(--shadow); }
+.article-card h1 { color: #101820; }
+.article-card p, .article-card li { line-height: 1.75; color: #344252; }
+.article-card h2 { margin-top: 2rem; color: #17212D; }
+.article-card code, .article-card pre { background: #17212D; color: #D5FFF6; border-radius: 12px; padding: .2rem .45rem; }
+.article-card pre { padding: 1rem; overflow-x: auto; }
+@media (max-width: 1050px) { .lab-workspace { grid-template-columns: 1fr; grid-template-areas: "side" "stage" "metrics" "log"; } .metric-panel { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 650px) { .lab-shell-header { align-items: flex-start; flex-direction: column; } .metric-panel { grid-template-columns: 1fr; } h1 { font-size: 2.5rem; } }
