@@ -50,7 +50,7 @@ Date: August 2026
     *   [Requesting Additions 📝](#requesting-additions)
 *   [License 📜](#license)
 *   [Important Links 🔗](#important-links)
-*   [Copyright ©️](#copyright)
+*   [Attribution ℹ️️](#attribution)
 
 ---
 
@@ -61,7 +61,13 @@ Date: August 2026
 
 
 
-I developed **CartPole Control Lab** as an interactive CartPole reinforcement-learning project that explains the agent loop, exposes experiment controls and results, and preserves the original learning source alongside a browser-friendly control lab.
+
+
+**CartPole Control Lab** is a reinforcement-learning project that makes agent behavior easier to inspect through both the underlying learning implementation and a visual presentation of the control problem. The environment is intentionally simple enough to follow while still exposing the core challenges of balancing state, action, reward, exploration, and stability.
+
+I built the project so the learning process is not hidden behind a final score. The supporting Python and notebook work documents the model, replay behavior, and experiments, while the browser-facing material gives the problem a clearer visual explanation and makes the relationship between state changes and control decisions easier to follow.
+
+Keeping both sides together makes the project useful as an engineering artifact rather than only a demo. The source shows how the agent is trained and evaluated, and the presentation layer helps communicate what that work is doing and why the control task matters.
 
 </details>
 
@@ -72,8 +78,8 @@ I developed **CartPole Control Lab** as an interactive CartPole reinforcement-le
 
 
 
-I built the CartPole Control Lab to make the reinforcement-learning process easier to inspect than it is inside a notebook cell. The project keeps the relationship between state, action, reward, exploration, replay memory, and score visible, while the browser interface provides a direct way to explore the problem and the recorded results. The original source remains part of the project so the educational browser layer does not replace the actual learning implementation.
 
+I created **CartPole Control Lab** to make reinforcement-learning behavior easier to observe and understand while still keeping the working learning implementation connected to the project. CartPole is useful because a simple control problem exposes the decisions an agent has to make around state, action, reward, exploration, replay memory, and stability. The browser experience gives those ideas a clear visual presentation, while the original source remains available for the actual learning and experimentation behind the results.
 </details>
 
 <a id="design-style-and-inspiration"></a>
@@ -94,18 +100,22 @@ CartPole Control Lab is styled as an interactive experiment console. Dark navy c
 
 
 
+
+
 I pulled the palette below directly from the current project stylesheet `assets/css/styles.css`.
 
-| Hex | Color Name | Primary Use |
+Each row lists every interface-use category identified for that exact color value in the documented stylesheet analysis. When one hex value is reused for several jobs, I keep all of those uses together in the same row instead of reducing it to a single generic label.
+
+| Hex | Color Name | Complete Use in the Interface |
 | --- | --- | --- |
-| `#11172B` | Ink Navy | Primary text, borders, hard shadows, and structural outlines |
+| `#11172B` | Ink Navy | Primary text; borders; hard shadows; and structural outlines |
 | `#171D36` | Night | Main experiment and control surfaces |
 | `#202747` | Night Blue | Secondary dark panels and headers |
 | `#F7F1DF` | Cream | Main page background |
-| `#FFFDF6` | Paper | Cards, simulation canvas, and light control surfaces |
+| `#FFFDF6` | Paper | Cards; simulation canvas; and light control surfaces |
 | `#FF5F57` | Coral | Primary controls and strong experiment accents |
-| `#54D8E5` | Cyan | State, control, and simulation highlights |
-| `#C9F45B` | Lime | Status, success, and high-visibility metrics |
+| `#54D8E5` | Cyan | State; control; and simulation highlights |
+| `#C9F45B` | Lime | Status; success; and high-visibility metrics |
 | `#A78BFA` | Violet | Secondary metric and decorative accent |
 | `#FFD65A` | Yellow | Controls and highlighted technical details |
 | `#4E78FF` | Blue | Labels and supporting technical emphasis |
@@ -451,18 +461,22 @@ No license terms are assumed here. If the repository includes a `LICENSE` file, 
 
 ---
 
-<a id="copyright"></a>
+<a id="attribution"></a>
 
 <details open>
-<summary><h2><strong>Copyright ©️</strong></h2></summary>
+<summary><h2><strong>Attribution ℹ️</strong></h2></summary>
 
 
+Project documentation and original project materials are credited to their respective sources where applicable.
 
-© 2026 Alysha Pursley. Project documentation and original project materials are credited to their respective sources where applicable.
-
+</details>
 
 ---
 
-Made with care by Alysha Pursley.
+<div align=center>
+   
+***Made with ❤️ and a bit of 🪄.***
+<br>
+**©️ 2026 Alysha Pursley. All Rights Reserved.**
 
-</details>
+</div>
