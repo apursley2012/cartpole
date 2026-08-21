@@ -57,10 +57,9 @@ Date: August 2026
 <a id="project-overview"></a>
 
 <details open>
-<summary><strong>Project Overview 🔎</strong></summary>
+<summary><h2><strong>Project Overview 🔎</strong></h2></summary>
 
 
-## Project Overview 🔎
 
 I developed **CartPole Control Lab** as an interactive CartPole reinforcement-learning project that explains the agent loop, exposes experiment controls and results, and preserves the original learning source alongside a browser-friendly control lab.
 
@@ -69,10 +68,9 @@ I developed **CartPole Control Lab** as an interactive CartPole reinforcement-le
 <a id="purpose"></a>
 
 <details open>
-<summary><strong>Purpose 🎯</strong></summary>
+<summary><h3><strong>Purpose 🎯</strong></h3></summary>
 
 
-### Purpose 🎯
 
 I built the CartPole Control Lab to make the reinforcement-learning process easier to inspect than it is inside a notebook cell. The project keeps the relationship between state, action, reward, exploration, replay memory, and score visible, while the browser interface provides a direct way to explore the problem and the recorded results. The original source remains part of the project so the educational browser layer does not replace the actual learning implementation.
 
@@ -81,10 +79,9 @@ I built the CartPole Control Lab to make the reinforcement-learning process easi
 <a id="design-style-and-inspiration"></a>
 
 <details open>
-<summary><strong>Design Style and Inspiration 🎨</strong></summary>
+<summary><h3><strong>Design Style and Inspiration 🎨</strong></h3></summary>
 
 
-### Design Style and Inspiration 🎨
 
 CartPole Control Lab is styled as an interactive experiment console. Dark navy creates the lab and simulation shell, cream and paper keep explanations readable, and coral, cyan, lime, yellow, violet, and blue divide controls, metrics, state information, and feedback. The bold treatment makes the experiment memorable, but it stays centered on the learning problem: balancing the pole, observing state changes, comparing control behavior, and connecting the simulation to reinforcement-learning concepts.
 
@@ -93,10 +90,9 @@ CartPole Control Lab is styled as an interactive experiment console. Dark navy c
 <a id="main-color-palette"></a>
 
 <details open>
-<summary><strong>Main Color Palette 🌈</strong></summary>
+<summary><h3><strong>Main Color Palette 🌈</strong></h3></summary>
 
 
-### Main Color Palette 🌈
 
 I pulled the palette below directly from the current project stylesheet `assets/css/styles.css`.
 
@@ -121,10 +117,9 @@ I pulled the palette below directly from the current project stylesheet `assets/
 <a id="preview-screenshots"></a>
 
 <details open>
-<summary><strong>Preview Screenshots 🖼️</strong></summary>
+<summary><h3><strong>Preview Screenshots 🖼️</strong></h3></summary>
 
 
-### Preview Screenshots 🖼️
 
 Click any preview image in the repository screenshot folder to open the full-size file.
 
@@ -141,10 +136,9 @@ The gallery uses paired, centered images when screenshots are present. Keep scre
 <a id="key-features"></a>
 
 <details open>
-<summary><strong>Key Features ✨</strong></summary>
+<summary><h2><strong>Key Features ✨</strong></h2></summary>
 
 
-## Key Features ✨
 
 *   **Explain the CartPole state, action, and reward loop**
 *   **Visualize or simulate the cart-and-pole control problem in the browser**
@@ -162,10 +156,9 @@ The gallery uses paired, centered images when screenshots are present. Keep scre
 <a id="tech-stack"></a>
 
 <details open>
-<summary><strong>Tech Stack 🛠️</strong></summary>
+<summary><h2><strong>Tech Stack 🛠️</strong></h2></summary>
 
 
-## Tech Stack 🛠️
 
 *   **HTML**
 *   **CSS**
@@ -181,10 +174,9 @@ The gallery uses paired, centered images when screenshots are present. Keep scre
 <a id="live-demo"></a>
 
 <details open>
-<summary><strong>Live Demo 🚀</strong></summary>
+<summary><h2><strong>Live Demo 🚀</strong></h2></summary>
 
 
-## Live Demo 🚀
 
 Open the published project here:
 
@@ -197,20 +189,18 @@ Open the published project here:
 <a id="installation"></a>
 
 <details open>
-<summary><strong>Installation 📦</strong></summary>
+<summary><h2><strong>Installation 📦</strong></h2></summary>
 
 
-## Installation 📦
 
 </details>
 
 <a id="local-use"></a>
 
 <details open>
-<summary><strong>Local Use 💻</strong></summary>
+<summary><h3><strong>Local Use 💻</strong></h3></summary>
 
 
-### Local Use 💻
 
 1. Clone or download the repository.
 2. Keep the existing folder structure intact so the page can still find its styles, scripts, data, and assets.
@@ -222,10 +212,9 @@ Open the published project here:
 <a id="github-pages-deployment"></a>
 
 <details open>
-<summary><strong>GitHub Pages Deployment 🌐</strong></summary>
+<summary><h3><strong>GitHub Pages Deployment 🌐</strong></h3></summary>
 
 
-### GitHub Pages Deployment 🌐
 
 For the static/public portion, keep `index.html` at the repository root, use relative asset paths, then enable **Settings → Pages → Deploy from a branch → main → / (root)**. Projects that include Python, Node, MongoDB, authentication, browser automation, or another server runtime still need an appropriate backend host for those server-dependent features.
 
@@ -236,10 +225,9 @@ For the static/public portion, keep `index.html` at the repository root, use rel
 <a id="usage"></a>
 
 <details open>
-<summary><strong>Usage 🧭</strong></summary>
+<summary><h2><strong>Usage 🧭</strong></h2></summary>
 
 
-## Usage 🧭
 
 Start with the main page and follow the project’s primary workflow. The interface is intended to be usable without reading the source first, while the case studies, articles, documentation, and source folders provide the deeper implementation context. Where browser storage is used, saved information belongs to that browser/device unless the project explicitly includes a shared backend.
 
@@ -250,20 +238,18 @@ Start with the main page and follow the project’s primary workflow. The interf
 <a id="project-structure"></a>
 
 <details open>
-<summary><strong>Project Structure 🗂️</strong></summary>
+<summary><h2><strong>Project Structure 🗂️</strong></h2></summary>
 
 
-## Project Structure 🗂️
 
 </details>
 
 <a id="pages-included"></a>
 
 <details open>
-<summary><strong>Pages Included 📄</strong></summary>
+<summary><h3><strong>Pages Included 📄</strong></h3></summary>
 
 
-### Pages Included 📄
 
 | Page / Area | Purpose |
 | --- | --- |
@@ -281,10 +267,9 @@ Start with the main page and follow the project’s primary workflow. The interf
 <a id="core-files-and-architecture"></a>
 
 <details open>
-<summary><strong>Core Files and Architecture 🧩</strong></summary>
+<summary><h3><strong>Core Files and Architecture 🧩</strong></h3></summary>
 
 
-### Core Files and Architecture 🧩
 
 The repository separates the public interface from supporting source and documentation where the project needs that distinction. The important rule is that **CartPole Control Lab should be documented as the project it is**, not as a generic theme or one-size-fits-all site. Files that implement the main workflow belong with the application, while case studies, articles, source history, data, or backend code are documented according to their real role.
 
@@ -293,10 +278,9 @@ The repository separates the public interface from supporting source and documen
 <a id="file-and-folder-structure"></a>
 
 <details open>
-<summary><strong>File and Folder Structure 🌳</strong></summary>
+<summary><h3><strong>File and Folder Structure 🌳</strong></h3></summary>
 
 
-### File and Folder Structure 🌳
 
 ```text
 cartpole/
@@ -320,10 +304,9 @@ This tree highlights the major documented areas rather than inventing files that
 <a id="reinforcementlearning-model"></a>
 
 <details open>
-<summary><strong>Reinforcement-Learning Model 🤖</strong></summary>
+<summary><h2><strong>Reinforcement-Learning Model 🤖</strong></h2></summary>
 
 
-## Reinforcement-Learning Model 🤖
 
 CartPole is a control problem with a compact state but a continuous stream of decisions. The agent observes values describing the cart and pole, chooses an action, receives the next state and reward, and gradually updates its policy from experience. The project explains those pieces separately so “the AI learned it” is not used as a substitute for the actual loop.
 
@@ -336,10 +319,9 @@ The browser experience is for inspection and interaction. Any original Python tr
 <a id="customization-guide"></a>
 
 <details open>
-<summary><strong>Customization Guide 🎨</strong></summary>
+<summary><h2><strong>Customization Guide 🎨</strong></h2></summary>
 
 
-## Customization Guide 🎨
 
 The safest way to customize or extend **CartPole Control Lab** is to preserve its existing workflow first, then change one layer at a time. Update project content and data in the files that already own that information, keep visual changes inside the existing style system, and test every page that shares the changed component or data source. New features should solve a problem that belongs to this project instead of copying a feature from an unrelated application.
 
@@ -352,10 +334,9 @@ For visual changes, update the documented palette intentionally and re-check con
 <a id="accessibility-and-browser-compatibility"></a>
 
 <details open>
-<summary><strong>Accessibility and Browser Compatibility ♿</strong></summary>
+<summary><h2><strong>Accessibility and Browser Compatibility ♿</strong></h2></summary>
 
 
-## Accessibility and Browser Compatibility ♿
 
 The public interface should remain keyboard-navigable, readable at common mobile and desktop widths, and usable without relying on color alone to communicate state. Form controls should keep visible labels or accessible names, images should use meaningful `alt` text, focus indicators should remain visible, and decorative animation should respect reduced-motion preferences when motion is present. Browser compatibility should be checked in current Safari, Chrome, Firefox, and Edge where practical.
 
@@ -366,10 +347,9 @@ The public interface should remain keyboard-navigable, readable at common mobile
 <a id="repository-relationship"></a>
 
 <details open>
-<summary><strong>Repository Relationship 🔗</strong></summary>
+<summary><h2><strong>Repository Relationship 🔗</strong></h2></summary>
 
 
-## Repository Relationship 🔗
 
 **CartPole Control Lab** is documented as its own project. Supporting case studies, articles, source history, static presentation layers, or backend/runtime folders are parts of this repository only when they help explain or run this project. They should not be described as separate replacement projects.
 
@@ -382,10 +362,9 @@ Where this repository contains both a static GitHub Pages layer and source that 
 <a id="project-scope-and-limitations"></a>
 
 <details open>
-<summary><strong>Project Scope and Limitations 📌</strong></summary>
+<summary><h2><strong>Project Scope and Limitations 📌</strong></h2></summary>
 
 
-## Project Scope and Limitations 📌
 
 This README separates what the published browser version can do from functionality that belongs to a backend, database, native application, notebook, or other runtime. Static hosting limitations are stated where they materially affect the project. The documentation should not imply that GitHub Pages is providing server-side authentication, Python execution, MongoDB access, SMS delivery, or another service it cannot actually run.
 
@@ -396,10 +375,9 @@ This README separates what the published browser version can do from functionali
 <a id="possible-future-enhancements"></a>
 
 <details open>
-<summary><strong>Possible Future Enhancements 💡</strong></summary>
+<summary><h2><strong>Possible Future Enhancements 💡</strong></h2></summary>
 
 
-## Possible Future Enhancements 💡
 
 *   Add side-by-side comparison of different exploration settings
 *   Add clearer run-to-run score visualizations
@@ -413,10 +391,9 @@ This README separates what the published browser version can do from functionali
 <a id="contributing"></a>
 
 <details open>
-<summary><strong>Contributing 🤝</strong></summary>
+<summary><h2><strong>Contributing 🤝</strong></h2></summary>
 
 
-## Contributing 🤝
 
 Contributions, bug reports, and practical improvement suggestions are welcome when they preserve the existing project direction and do not replace its identity with a generic redesign.
 
@@ -425,10 +402,9 @@ Contributions, bug reports, and practical improvement suggestions are welcome wh
 <a id="reporting-issues"></a>
 
 <details open>
-<summary><strong>Reporting Issues 🐛</strong></summary>
+<summary><h3><strong>Reporting Issues 🐛</strong></h3></summary>
 
 
-### Reporting Issues 🐛
 
 When reporting a problem, include the page or workflow involved, what you expected, what actually happened, browser/device information when relevant, and a screenshot if the issue is visual.
 
@@ -437,10 +413,9 @@ When reporting a problem, include the page or workflow involved, what you expect
 <a id="requesting-additions"></a>
 
 <details open>
-<summary><strong>Requesting Additions 📝</strong></summary>
+<summary><h3><strong>Requesting Additions 📝</strong></h3></summary>
 
 
-### Requesting Additions 📝
 
 Feature requests should explain the user problem the addition would solve and how it fits the existing project. Project-specific improvements are preferred over adding features only because they are common in other applications.
 
@@ -451,10 +426,9 @@ Feature requests should explain the user problem the addition would solve and ho
 <a id="license"></a>
 
 <details open>
-<summary><strong>License 📜</strong></summary>
+<summary><h2><strong>License 📜</strong></h2></summary>
 
 
-## License 📜
 
 No license terms are assumed here. If the repository includes a `LICENSE` file, that file controls reuse. If it does not, normal copyright applies and permission should not be inferred from the repository being public.
 
@@ -465,10 +439,9 @@ No license terms are assumed here. If the repository includes a `LICENSE` file, 
 <a id="important-links"></a>
 
 <details open>
-<summary><strong>Important Links 🔗</strong></summary>
+<summary><h2><strong>Important Links 🔗</strong></h2></summary>
 
 
-## Important Links 🔗
 
 *   **Live Project:** [https://apursley2012.github.io/cartpole/](https://apursley2012.github.io/cartpole/)
 *   **Repository:** [https://github.com/apursley2012/cartpole](https://github.com/apursley2012/cartpole)
@@ -481,10 +454,9 @@ No license terms are assumed here. If the repository includes a `LICENSE` file, 
 <a id="copyright"></a>
 
 <details open>
-<summary><strong>Copyright ©️</strong></summary>
+<summary><h2><strong>Copyright ©️</strong></h2></summary>
 
 
-## Copyright ©️
 
 © 2026 Alysha Pursley. Project documentation and original project materials are credited to their respective sources where applicable.
 
