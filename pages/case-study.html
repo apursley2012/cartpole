@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<!--
+  +----------------------------------------------------------------------------+
+  | CartPole Balance Lab — case-study.html                                     |
+  | Purpose: Provides the editable case study page content.                    |
+  | Author: Alysha Pursley                                                     |
+  | Copyright (c) 2026 Alysha Pursley.                                         |
+  +----------------------------------------------------------------------------+
+-->
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta content="Alysha Pursley" name="author">
+		<meta content="width=device-width, initial-scale=1" name="viewport">
+		<meta content="Read the CartPole DQN case study covering architecture, browser simulation boundaries, deterministic validation, engineering choices, and source provenance." name="description">
+		<title>CartPole DQN Engineering Case Study | Balance Lab</title>
+		<link href="../assets/css/shared.css?v=20260918-1" rel="stylesheet">
+		<link href="../assets/css/pages/case-study.css?v=20260918-1" rel="stylesheet">
+		<meta content="#171d36" name="theme-color">
+		<meta content="strict-origin-when-cross-origin" name="referrer">
+		<meta content="CartPole DQN Engineering Case Study | Balance Lab" property="og:title">
+		<meta content="Read the CartPole DQN case study covering architecture, browser simulation boundaries, deterministic validation, engineering choices, and source provenance." property="og:description">
+		<meta content="article" property="og:type">
+		<meta content="../assets/social-preview.png" property="og:image">
+		<meta content="summary_large_image" name="twitter:card">
+		<meta content="CartPole DQN Engineering Case Study | Balance Lab" name="twitter:title">
+		<meta content="Read the CartPole DQN case study covering architecture, browser simulation boundaries, deterministic validation, engineering choices, and source provenance." name="twitter:description">
+		<meta content="../assets/social-preview.png" name="twitter:image">
+		<link href="../favicon.ico" rel="icon" sizes="any">
+		<link href="../assets/icons/favicon-32.png" rel="icon" sizes="32x32" type="image/png">
+		<link href="../assets/icons/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180">
+		<link href="../manifest.webmanifest" rel="manifest">
+		<meta content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self'" http-equiv="Content-Security-Policy">
+	</head>
+	<body class="page-case-study">
+		<a class="skip-link" href="#main-content">Skip to main content</a>
+		<header data-site-header="">
+			<noscript>
+				<nav aria-label="Primary navigation fallback">
+					<a href="./index.html">Demo</a>
+					<a href="./case-study.html">Case Study</a>
+					<a href="./article.html">Articles</a>
+					<a href="./project-record.html">Development Record</a>
+				</nav>
+			</noscript>
+		</header>
+    <!--
+			============================================================================
+			Main project documentation content
+			============================================================================
+    -->
+		<main class="article-shell" id="main-content">
+			<article class="article-card">
+				<p class="eyebrow">Case Study</p>
+				<h1>Making Deep Q-Learning Visible in the Browser</h1>
+				<p class="lead">
+					I built CartPole Control Lab around a simple goal: keep the learning mechanics
+					inspectable. The browser simulation shows the changing state, selected actions,
+					replay memory, exploration rate, episode scores, and manual controls while the
+					Python notebook remains available as the source-side learning implementation.
+				</p>
+				<h2>The problem</h2>
+				<p>
+					A notebook can contain the complete training loop and still be difficult to
+					understand at a glance. CartPole depends on four continuously changing
+					observations, two possible actions, delayed consequences, and repeated training
+					updates. I wanted the public interface to expose those pieces without pretending
+					that GitHub Pages can execute Python, Gym, or Keras.
+				</p>
+				<h2>Requirements I preserved</h2>
+				<ul>
+					<li>Use the CartPole-v1 environment and its four-value observation space.</li>
+					<li>Keep the two-action left/right control model.</li>
+					<li>
+						Preserve the DQN structure of two 24-unit ReLU hidden layers and a two-value
+						linear output.
+					</li>
+					<li>
+						Keep the documented hyperparameters: gamma
+						<code>0.95</code>
+						, learning rate
+						<code>0.001</code>
+						, replay capacity
+						<code>1,000,000</code>
+						, batch size
+						<code>20</code>
+						, and epsilon decay from
+						<code>1.0</code>
+						toward
+						<code>0.01</code>
+						.
+					</li>
+					<li>
+						Keep experience replay and epsilon-greedy action selection visible in the
+						project.
+					</li>
+					<li>
+						Preserve the established DQN behavior while keeping external starter-code
+						and environment sources explicitly attributed.
+					</li>
+				</ul>
+				<h2>Browser architecture</h2>
+				<p>
+					The public project is static HTML, CSS, and JavaScript, so it can run on GitHub
+					Pages. The browser simulation implements CartPole dynamics locally and uses a
+					small JavaScript DQN agent. It does not execute the Python notebook or Keras
+					model in the browser.
+				</p>
+				<div aria-label="Browser CartPole module structure" class="code-window">
+					<div class="editor-bar">
+						<span aria-hidden="true" class="window-dots">
+							<i></i>
+							<i></i>
+							<i></i>
+						</span>
+						<strong>assets/js/</strong>
+						<span>MODULES</span>
+					</div>
+					<pre class="code-editor"><code>config.js          shared model and environment constants
+cartpole-env.js    CartPole physics and terminal-state handling
+replay-buffer.js   fixed-capacity circular replay memory
+dqn-agent.js       action selection, replay, and network updates
+app.js             controls, rendering, metrics, and page events</code></pre>
+				</div>
+				<h2>Why the browser agent keeps a compatibility mode</h2>
+				<p>
+					The browser DQN defaults to
+					<code>legacy</code>
+					training mode because changing its update order or training additional layers
+					would change the existing demo behavior. I keep that compatibility path explicit
+					instead of silently replacing it. A separate
+					<code>full-backprop</code>
+					mode is available in the agent implementation for a complete gradient update,
+					but the public demo does not enable it by default.
+				</p>
+				<div class="callout">
+					<strong>Engineering tradeoff:</strong>
+					preserving the existing browser-learning behavior matters more here than
+					changing the agent simply to use a different implementation. The compatibility
+					decision is documented and regression-tested.
+				</div>
+				<h2>Replay memory and performance</h2>
+				<p>
+					The earlier browser demo memory used an array and removed the oldest item with
+					<code>shift()</code>
+					. With a capacity of one million experiences, repeatedly shifting a large array
+					is unnecessary work. I replaced that storage mechanism with a fixed-capacity
+					circular buffer. It still discards the oldest experience when full, but it does
+					so without moving every remaining item.
+				</p>
+				<h2>Termination and validation</h2>
+				<p>
+					The environment keeps the existing
+					<code>terminal</code>
+					value used by the application and also reports
+					<code>terminated</code>
+					and
+					<code>truncated</code>
+					separately. That makes the reason an episode ended clearer without breaking the
+					existing control flow. Unsupported actions are rejected with a descriptive error
+					instead of silently being treated as a left move.
+				</p>
+				<h2>Interface and accessibility</h2>
+				<p>
+					The interface uses semantic buttons for simulation controls, visible keyboard
+					focus, pressed-state information for the agent/manual mode controls, an
+					<code>aria-live</code>
+					training log, and reduced-motion handling. Manual mode works with both the on-
+					screen force buttons and the left/right arrow keys. Shared site styles are
+					separated from page-specific styles so visual changes have a predictable owner.
+				</p>
+				<h2>Testing strategy</h2>
+				<p>
+					The automated tests focus on deterministic behavior: environment reset and
+					termination, invalid actions, replay-buffer capacity, DQN output shape,
+					preservation of legacy first-layer behavior, the opt-in full-backprop path,
+					required DOM hooks, stylesheet ordering, and static project references. I avoid
+					tests that claim the randomly initialized learning agent must reach a particular
+					score, because that would make the suite depend on stochastic training outcomes.
+				</p>
+				<h2>Runtime boundaries</h2>
+				<p>
+					The GitHub Pages experience is the browser demo. My original Python/Jupyter
+					project is maintained under
+					<code>original-project/</code>
+					and runs separately with Gymnasium, Keras/TensorFlow, NumPy, and Matplotlib. The
+					source includes its required score logger, and the DQN/logger starter lineage is
+					cited in the repository.
+				</p>
+			</article>
+		</main>
+		<footer data-site-footer=""></footer>
+		<script src="../assets/js/components/site-shell.js" type="module"></script>
+	</body>
+</html>

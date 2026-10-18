@@ -1,0 +1,16 @@
+/*
+  +----------------------------------------------------------------------------+
+  | CartPole Balance Lab — case-study.css                                      |
+  | Purpose: Styles the case study page.                                       |
+  | Author: Alysha Pursley                                                     |
+  | Copyright (c) 2026 Alysha Pursley.                                         |
+  +----------------------------------------------------------------------------+
+*/
+
+.article-card .callout {
+	padding: 1.25rem;
+	border: 3px solid var(--ink);
+	background: var(--cyan);
+	border-radius: 18px;
+	box-shadow: 6px 6px 0 var(--ink);
+}

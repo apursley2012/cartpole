@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<!--
+  +----------------------------------------------------------------------------+
+  | CartPole Balance Lab — article.html                                        |
+  | Purpose: Provides the editable article page content.                       |
+  | Author: Alysha Pursley                                                     |
+  | Copyright (c) 2026 Alysha Pursley.                                         |
+  +----------------------------------------------------------------------------+
+-->
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta content="Alysha Pursley" name="author">
+		<meta content="width=device-width,initial-scale=1" name="viewport">
+		<meta content="Learn how a Deep Q-Network balances CartPole using state observations, epsilon-greedy actions, replay memory, Bellman targets, and neural-network training." name="description">
+		<title>How a Deep Q-Network Learns CartPole | Balance Lab</title>
+		<link href="../assets/css/shared.css?v=20260918-1" rel="stylesheet">
+		<meta content="#171d36" name="theme-color">
+		<meta content="strict-origin-when-cross-origin" name="referrer">
+		<meta content="How a Deep Q-Network Learns CartPole | Balance Lab" property="og:title">
+		<meta content="Learn how a Deep Q-Network balances CartPole using state observations, epsilon-greedy actions, replay memory, Bellman targets, and neural-network training." property="og:description">
+		<meta content="article" property="og:type">
+		<meta content="../assets/social-preview.png" property="og:image">
+		<meta content="summary_large_image" name="twitter:card">
+		<meta content="How a Deep Q-Network Learns CartPole | Balance Lab" name="twitter:title">
+		<meta content="Learn how a Deep Q-Network balances CartPole using state observations, epsilon-greedy actions, replay memory, Bellman targets, and neural-network training." name="twitter:description">
+		<meta content="../assets/social-preview.png" name="twitter:image">
+		<meta content="Alysha Pursley" property="article:author">
+		<link href="../favicon.ico" rel="icon" sizes="any">
+		<link href="../assets/icons/favicon-32.png" rel="icon" sizes="32x32" type="image/png">
+		<link href="../assets/icons/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180">
+		<link href="../manifest.webmanifest" rel="manifest">
+		<meta content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self'" http-equiv="Content-Security-Policy">
+	</head>
+	<body class="page-technical-article">
+		<a class="skip-link" href="#main-content">Skip to main content</a>
+		<header data-site-header="">
+			<noscript>
+				<nav aria-label="Primary navigation fallback">
+					<a href="./index.html">Demo</a>
+					<a href="./case-study.html">Case Study</a>
+					<a href="./article.html">Articles</a>
+					<a href="./project-record.html">Development Record</a>
+				</nav>
+			</noscript>
+		</header>
+    <!--
+			============================================================================
+			Main technical article
+			============================================================================
+    -->
+		<main class="article-shell" id="main-content">
+			<article class="article-card">
+				<p class="eyebrow">Technical Article</p>
+				<h1>How a Deep Q-Network Learns to Balance</h1>
+				<p class="lead">
+					CartPole is useful because the goal is easy to see while the learning process is
+					not. The agent only moves left or right, but it has to connect four changing
+					measurements to the long-term effect of every action.
+				</p>
+				<h2>What the agent receives</h2>
+				<p>The environment describes each moment with four numbers:</p>
+				<ul>
+					<li>
+						<strong>Cart position</strong>
+						tells the agent where the cart is on the track.
+					</li>
+					<li>
+						<strong>Cart velocity</strong>
+						shows its current direction and speed.
+					</li>
+					<li>
+						<strong>Pole angle</strong>
+						measures how far the pole has moved from upright.
+					</li>
+					<li>
+						<strong>Pole velocity</strong>
+						shows how quickly that angle is changing.
+					</li>
+				</ul>
+				<p>
+					Those values form the state. The network receives that state and produces two
+					Q-values: one for pushing left and one for pushing right. The action with the
+					stronger predicted value becomes the agent’s choice unless exploration selects a
+					random action.
+				</p>
+				<h2>What a Q-value means</h2>
+				<p>
+					A Q-value is not a direct measurement of balance. It is the network’s estimate
+					of how useful an action will be from the current state when future rewards are
+					considered.
+				</p>
+				<div aria-label="Q-value update from the CartPole notebook" class="code-window">
+					<div class="editor-bar">
+						<span aria-hidden="true" class="window-dots">
+							<i></i>
+							<i></i>
+							<i></i>
+						</span>
+						<strong>experience_replay()</strong>
+						<span>PYTHON</span>
+					</div>
+					<pre class="code-editor"><code>q_update = reward + <span class="const">GAMMA</span> * np.<span class="fn">amax</span>(
+		<span class="self">self</span>.model.<span class="fn">predict</span>(state_next)[<span class="num">0</span>]
+)</code></pre>
+					<div class="editor-status">
+						<span>cartpole.ipynb</span>
+						<span>DQN target</span>
+					</div>
+				</div>
+				<p>
+					The first part is the immediate reward. The second part uses the best predicted
+					value from the next state and discounts it with
+					<code>GAMMA</code>
+					. With gamma set to
+					<code>0.95</code>
+					, the agent considers future stability without treating a prediction about the
+					future exactly like a reward it has already received.
+				</p>
+				<h2>Why the agent starts with random actions</h2>
+				<p>
+					At the beginning, the network has not learned which output deserves more
+					confidence. Always choosing its current “best” action would lock it into
+					decisions based on nearly meaningless predictions. An exploration rate of
+					<code>1.0</code>
+					gives the agent a broad range of early experiences.
+				</p>
+				<p>
+					After training begins, the exploration rate is multiplied by
+					<code>0.995</code>
+					until it reaches
+					<code>0.01</code>
+					. The balance gradually shifts from discovering possibilities to using what the
+					network has learned, while a small amount of randomness remains.
+				</p>
+				<h2>Why replay memory matters</h2>
+				<p>
+					Every step creates a five-part experience: the current state, selected action,
+					reward, next state, and whether the episode ended. The agent saves those
+					experiences instead of learning only from the most recent step.
+				</p>
+				<p>
+					Once memory contains at least 20 entries, the solver samples a batch and trains
+					on those earlier transitions. Random sampling reduces the influence of
+					consecutive, highly related states and gives the network repeated opportunities
+					to learn from both successful and unsuccessful decisions.
+				</p>
+				<h2>How the network learns from a batch</h2>
+				<p>
+					For each sampled experience, the model predicts the current Q-values. The
+					selected action’s target is replaced with either the terminal reward or the
+					calculated immediate-plus-future value. Training then adjusts the network so its
+					output moves closer to that target.
+				</p>
+				<p>
+					The network uses two hidden layers with 24 ReLU units each and a two-value
+					linear output layer. Repeating this update across many batches gradually changes
+					which actions the model values in different parts of the state space.
+				</p>
+				<h2>How progress is measured</h2>
+				<p>
+					An episode ends when the pole angle or cart position leaves the permitted range,
+					or when the run reaches its maximum length. The score represents how many steps
+					the agent kept the system within those limits. The rolling average matters more
+					than a single high score because it shows whether the behavior is becoming
+					consistently reliable.
+				</p>
+				<h2>What the simulation makes easier to understand</h2>
+				<p>
+					Watching the four state values beside the moving cart connects the math to
+					visible behavior. The exploration rate explains why the agent may still make an
+					unexpected move. Replay-memory growth shows that training is building from more
+					than the current episode. The chart then shows whether those decisions are
+					producing stronger performance over time.
+				</p>
+				<h2>Continue with another CartPole approach</h2>
+				<p>
+					This project uses DQN, but CartPole can also be solved with policy-gradient and
+					actor-critic methods. My companion article compares the DQN process shown here
+					with REINFORCE and Advantage Actor-Critic.
+				</p>
+				<div class="article-actions">
+					<a href="./reinforce-a2c-cartpole.html">Compare DQN, REINFORCE, and A2C</a>
+					<a href="./index.html">Try the Interactive Demo</a>
+					<a href="./case-study.html">Read the Case Study</a>
+					<a href="./project-record.html">View Development Record</a>
+				</div>
+			</article>
+		</main>
+		<footer data-site-footer=""></footer>
+		<script src="../assets/js/components/site-shell.js" type="module"></script>
+	</body>
+</html>

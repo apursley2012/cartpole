@@ -1,0 +1,62 @@
+/*
+  +----------------------------------------------------------------------------+
+  | CartPole Balance Lab — accessibility.css                                   |
+  | Purpose: Styles the shared accessibility component.                        |
+  | Author: Alysha Pursley                                                     |
+  | Copyright (c) 2026 Alysha Pursley.                                         |
+  +----------------------------------------------------------------------------+
+*/
+
+
+/*
+ * Keep visually hidden text available to assistive technology without
+ * affecting the visible layout.
+ */
+.sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
+}
+
+button:focus-visible,
+a:focus-visible {
+	outline: 3px solid var(--blue);
+	outline-offset: 4px;
+}
+
+/* Honor system motion preferences even when individual components animate. */
+@media (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto;
+	}
+
+  *,
+  *::before,
+  *::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+	}
+}
+
+.skip-link {
+	position: fixed;
+	top: 0.75rem;
+	left: 0.75rem;
+	z-index: 1000;
+	padding: 0.75rem 1rem;
+	background: var(--paper);
+	color: var(--ink);
+	border: 3px solid var(--ink);
+	transform: translateY(-180%);
+}
+
+.skip-link:focus {
+	transform: translateY(0);
+}

@@ -1,0 +1,367 @@
+/*
+  +----------------------------------------------------------------------------+
+  | CartPole Balance Lab — content.css                                         |
+  | Purpose: Styles the shared content component.                              |
+  | Author: Alysha Pursley                                                     |
+  | Copyright (c) 2026 Alysha Pursley.                                         |
+  +----------------------------------------------------------------------------+
+*/
+
+
+main {
+	width: min(1500px, 100%);
+	margin: auto;
+	padding: 0 clamp(1rem, 4vw, 4rem) 5rem;
+}
+
+.eyebrow {
+	margin: 0 0 0.9rem;
+	text-transform: uppercase;
+	letter-spacing: 0.16em;
+	font-size: 0.68rem;
+	font-weight: 950;
+	color: var(--blue);
+}
+
+.eyebrow span {
+	display: inline-grid;
+	place-items: center;
+	width: 1.8rem;
+	height: 1.8rem;
+	margin-right: 0.5rem;
+	border: 2px solid var(--ink);
+	border-radius: 50%;
+	background: var(--yellow);
+	color: var(--ink);
+	letter-spacing: 0;
+}
+
+
+.code-window,
+.terminal-window {
+	margin: 2rem 0;
+	border: 3px solid var(--ink);
+	border-radius: 18px;
+	background: #0d1224;
+	box-shadow: var(--hard-shadow-xl);
+	overflow: hidden;
+	color: #e8ecf8;
+	min-width: 0;
+}
+
+.code-window {
+	display: grid;
+	grid-template-columns: 190px minmax(0, 1fr);
+}
+
+.code-window:before {
+	content:
+	"▾ CARTPOLE\\A   ▾ scores\\A      PY  score_logger.py\\A   ◫  cartpole.ipynb\\A"
+	"   ▾ source\\A      JS  cartpole-env.js\\A      JS  dqn-agent.js";
+	grid-column: 1;
+	grid-row: 2 / span 2;
+	padding: 1rem 0.7rem;
+	background: #151b31;
+	border-right: 1px solid #354064;
+	color: #b7bfd8;
+	white-space: pre;
+	font: 600 0.68rem/1.75 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+.code-window>.editor-bar, .code-window>
+
+.code-window>.code-editor {
+	grid-column: 2;
+	min-width: 0;
+}
+
+.code-window>.editor-status {
+	grid-column: 2;
+}
+
+
+.code-window,
+.terminal-window {
+	margin: 0;
+}
+
+.editor-bar,
+.terminal-bar {
+	min-height: 48px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+	padding: 0.7rem 1rem;
+	background: #202747;
+	border-bottom: 1px solid #3c476c;
+	font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+	font-size: var(--text-small);
+	letter-spacing: 0.04em;
+}
+
+.editor-bar strong {
+	color: #fff;
+}
+
+.editor-bar>span:last-child,
+.terminal-bar>span:last-child {
+	color: var(--cyan);
+	font-size: var(--text-micro);
+	font-weight: 850;
+}
+
+.window-dots {
+	display: flex;
+	gap: 0.42rem;
+}
+
+.window-dots i {
+	width: 11px;
+	height: 11px;
+	border-radius: 50%;
+	background: var(--coral);
+}
+
+.window-dots i:nth-child(2) {
+	background: var(--yellow);
+}
+
+.window-dots i:nth-child(3) {
+	background: var(--lime);
+}
+
+
+.article-card .code-editor,
+.terminal-window pre {
+	margin: 0;
+	border-radius: 0;
+	background: #0d1224;
+	color: #d9def0;
+	padding: 1.15rem 1.2rem;
+	font: 500 0.72rem/1.7 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+	tab-size: 2;
+	white-space: pre-wrap;
+	overflow-wrap: anywhere;
+	word-break: break-word;
+	overflow-x: hidden;
+	max-width: 100%;
+}
+
+.article-card .code-editor code,
+.terminal-window pre code {
+	display: block;
+	background: #00000000;
+	color: inherit;
+	padding: 0;
+	border-radius: 0;
+	white-space: inherit;
+	overflow-wrap: inherit;
+	word-break: inherit;
+}
+
+
+.code-editor .fn {
+	color: var(--blue);
+}
+
+.code-editor .self {
+	color: var(--coral);
+}
+
+.code-editor .const {
+	color: var(--yellow);
+}
+
+
+.code-editor .num {
+	color: #ff9f92;
+}
+
+
+.editor-status {
+	display: flex;
+	justify-content: space-between;
+	gap: 1rem;
+	padding: 0.45rem 0.8rem;
+	background: var(--blue);
+	color: #fff;
+	font: 700 0.6rem ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+	letter-spacing: 0.05em;
+}
+
+
+.terminal-bar {
+	background: #171d36;
+	color: #fff;
+}
+
+.terminal-window pre {
+	min-height: 150px;
+	color: #cbd2e6;
+}
+
+.terminal-window .prompt {
+	color: var(--cyan);
+}
+
+.terminal-window .ok {
+	color: var(--lime);
+	font-weight: 900;
+}
+
+
+.code-window {
+	display: block;
+}
+
+.code-window:before {
+	content: none;
+	display: none;
+}
+
+.code-window>.editor-bar,
+.code-window>.code-editor,
+.code-window>.editor-status {
+	display: flex;
+	grid-column: auto;
+}
+
+.code-window>.code-editor {
+	display: block;
+	width: 100%;
+	min-width: 0;
+}
+
+
+.article-card table {
+	border-collapse: separate;
+	border-spacing: 0;
+	border: 3px solid var(--ink);
+	border-radius: 18px;
+	overflow: hidden;
+	box-shadow: var(--hard-shadow-lg);
+	background: var(--paper);
+}
+
+.article-card thead th {
+	background: var(--yellow);
+	color: var(--ink);
+	font-size: 0.72rem;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	border-bottom: 3px solid var(--ink);
+}
+
+.article-card th,
+.article-card td {
+	padding: 1rem;
+	border-right: 1px solid #cfd3de;
+	border-bottom: 1px solid #cfd3de;
+	vertical-align: middle;
+}
+
+.article-card th:last-child,
+.article-card td:last-child {
+	border-right: 0;
+}
+
+.article-card tbody tr:last-child td {
+	border-bottom: 0;
+}
+
+.article-card tbody tr:nth-child(even) td {
+	background: #f3f6ff;
+}
+
+.article-card tbody td:first-child {
+	font-weight: 900;
+	color: var(--ink);
+}
+
+.article-card tbody td:nth-child(2) {
+	font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+	font-weight: 800;
+	color: var(--blue);
+}
+
+/* Supporting pages switch navigation and tables to narrow-screen layouts. */
+@media (max-width:700px) {
+	.article-card table,
+	.article-card thead,
+	.article-card tbody,
+	.article-card tr,
+	.article-card td {
+		display: block;
+		width: 100%;
+	}
+
+	.article-card thead {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+	}
+
+	.article-card table {
+		border: 0;
+		border-radius: 0;
+		box-shadow: none;
+		background: #00000000;
+		overflow: visible;
+	}
+
+	.article-card tbody {
+		display: grid;
+		gap: 1rem;
+	}
+
+	.article-card tbody tr {
+		overflow: hidden;
+		border: 3px solid var(--ink);
+		border-radius: 16px;
+		background: var(--paper);
+		box-shadow: var(--hard-shadow-md);
+	}
+
+	.article-card tbody tr:nth-child(even) td {
+		background: #00000000;
+	}
+
+	.article-card tbody td {
+		display: grid;
+		grid-template-columns: minmax(90px, 0.42fr) minmax(0, 1fr);
+		gap: 0.8rem;
+		align-items: start;
+		padding: 0.75rem 0.9rem;
+		border-right: 0;
+		border-bottom: 1px solid #d7dbe5;
+		background: #00000000;
+	}
+
+	.article-card tbody td:last-child {
+		border-bottom: 0;
+	}
+
+	.article-card tbody td:before {
+		font-size: var(--text-micro);
+		line-height: 1.4;
+		font-weight: 950;
+		letter-spacing: 0.09em;
+		text-transform: uppercase;
+		color: var(--muted);
+	}
+
+	.article-card tbody td:nth-child(1):before {
+		content: "Setting";
+	}
+
+	.article-card tbody td:nth-child(2):before {
+		content: "Value";
+	}
+
+	.article-card tbody td:nth-child(3):before {
+		content: "Role";
+	}
+}

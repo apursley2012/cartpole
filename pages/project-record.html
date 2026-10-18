@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<!--
+  +----------------------------------------------------------------------------+
+  | CartPole Balance Lab — project-record.html                                 |
+  | Purpose: Provides the editable project record page content.                |
+  | Author: Alysha Pursley                                                     |
+  | Copyright (c) 2026 Alysha Pursley.                                         |
+  +----------------------------------------------------------------------------+
+-->
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta content="Alysha Pursley" name="author">
+		<meta content="width=device-width, initial-scale=1" name="viewport">
+		<meta content="Review the CartPole implementation record, architecture, configuration, source provenance, engineering decisions, and maintained Python and notebook source." name="description">
+		<title>CartPole Development Record | Balance Lab</title>
+		<link href="../assets/css/shared.css?v=20260918-1" rel="stylesheet">
+		<link href="../assets/css/pages/project-record.css?v=20260918-1" rel="stylesheet">
+		<meta content="#171d36" name="theme-color">
+		<meta content="strict-origin-when-cross-origin" name="referrer">
+		<meta content="CartPole Development Record | Balance Lab" property="og:title">
+		<meta content="Review the CartPole implementation record, architecture, configuration, source provenance, engineering decisions, and maintained Python and notebook source." property="og:description">
+		<meta content="website" property="og:type">
+		<meta content="../assets/social-preview.png" property="og:image">
+		<meta content="summary_large_image" name="twitter:card">
+		<meta content="CartPole Development Record | Balance Lab" name="twitter:title">
+		<meta content="Review the CartPole implementation record, architecture, configuration, source provenance, engineering decisions, and maintained Python and notebook source." name="twitter:description">
+		<meta content="../assets/social-preview.png" name="twitter:image">
+		<link href="../favicon.ico" rel="icon" sizes="any">
+		<link href="../assets/icons/favicon-32.png" rel="icon" sizes="32x32" type="image/png">
+		<link href="../assets/icons/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180">
+		<link href="../manifest.webmanifest" rel="manifest">
+		<meta content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self'" http-equiv="Content-Security-Policy">
+	</head>
+	<body class="page-project-record">
+		<a class="skip-link" href="#main-content">Skip to main content</a>
+		<header data-site-header="">
+			<noscript>
+				<nav aria-label="Primary navigation fallback">
+					<a href="./index.html">Demo</a>
+					<a href="./case-study.html">Case Study</a>
+					<a href="./article.html">Articles</a>
+					<a href="./project-record.html">Development Record</a>
+				</nav>
+			</noscript>
+		</header>
+    <!--
+			============================================================================
+			Main project documentation content
+			============================================================================
+    -->
+		<main class="article-shell wide" id="main-content">
+			<article class="article-card">
+				<p class="eyebrow">Code and Configuration</p>
+				<h1>Inside the CartPole Build</h1>
+				<p class="lead">
+					This record connects the browser demo to my maintained original Python/Jupyter
+					CartPole project and its starter-code lineage. It documents the model shape,
+					training constants, action selection, replay update, and the compatibility work
+					needed to keep the notebook readable with newer Gym-style APIs.
+				</p>
+				<section class="record-section">
+					<h2>Environment and model constants</h2>
+					<p>
+						The maintained notebook preserves the starter DQN configuration. The browser
+						configuration mirrors the same core values so the public simulation uses the
+						same observation/action shape and learning constants.
+					</p>
+					<div class="code-window">
+						<div class="editor-bar">
+							<span aria-hidden="true" class="window-dots">
+								<i></i>
+								<i></i>
+								<i></i>
+							</span>
+							<strong>cartpole.ipynb</strong>
+							<span>CONFIGURATION</span>
+						</div>
+						<pre class="code-editor"><code>ENV_NAME = "CartPole-v1"
+
+GAMMA = 0.95
+LEARNING_RATE = 0.001
+MEMORY_SIZE = 1_000_000
+BATCH_SIZE = 20
+
+EXPLORATION_MAX = 1.0
+EXPLORATION_MIN = 0.01
+EXPLORATION_DECAY = 0.995</code></pre>
+					</div>
+					<div aria-label="Core DQN configuration" class="configuration-grid">
+						<div class="configuration-card config-coral">
+							<span>Gamma</span>
+							<strong>0.95</strong>
+							<p>Discount applied to the best predicted value of the next state.</p>
+						</div>
+						<div class="configuration-card config-cyan">
+							<span>Learning rate</span>
+							<strong>0.001</strong>
+							<p>Optimizer learning rate preserved from the starter notebook.</p>
+						</div>
+						<div class="configuration-card config-lime">
+							<span>Replay capacity</span>
+							<strong>1M</strong>
+							<p>Maximum number of experiences retained in replay memory.</p>
+						</div>
+						<div class="configuration-card config-violet">
+							<span>Batch size</span>
+							<strong>20</strong>
+							<p>Number of experiences used by each replay pass.</p>
+						</div>
+						<div class="configuration-card config-yellow">
+							<span>Exploration floor</span>
+							<strong>0.01</strong>
+							<p>Minimum epsilon value after repeated decay.</p>
+						</div>
+						<div class="configuration-card config-blue">
+							<span>Exploration decay</span>
+							<strong>0.995</strong>
+							<p>Multiplier applied after replay once a full batch is available.</p>
+						</div>
+					</div>
+				</section>
+				<section class="record-section">
+					<h2>Network shape</h2>
+					<p>
+						The network accepts the four CartPole observations, passes them through two
+						24-unit ReLU layers, and returns one linear Q-value for each of the two
+						actions.
+					</p>
+					<div class="code-window">
+						<div class="editor-bar">
+							<span aria-hidden="true" class="window-dots">
+								<i></i>
+								<i></i>
+								<i></i>
+							</span>
+							<strong>DQNSolver</strong>
+							<span>KERAS</span>
+						</div>
+						<pre class="code-editor"><code>self.model = Sequential()
+self.model.add(Dense(24, input_shape=(observation_space,), activation="relu"))
+self.model.add(Dense(24, activation="relu"))
+self.model.add(Dense(self.action_space, activation="linear"))
+self.model.compile(
+		loss="mse",
+		optimizer=Adam(learning_rate=LEARNING_RATE),
+)</code></pre>
+					</div>
+				</section>
+				<section class="record-section">
+					<h2>Epsilon-greedy action selection</h2>
+					<p>
+						The agent explores randomly while the exploration check succeeds. Otherwise
+						it predicts Q-values and selects the action with the highest value.
+					</p>
+					<div class="code-window">
+						<div class="editor-bar">
+							<span aria-hidden="true" class="window-dots">
+								<i></i>
+								<i></i>
+								<i></i>
+							</span>
+							<strong>act()</strong>
+							<span>ACTION POLICY</span>
+						</div>
+						<pre class="code-editor"><code>if np.random.rand() &lt; self.exploration_rate:
+		return random.randrange(self.action_space)
+
+q_values = self.model.predict(state, verbose=0)
+return np.argmax(q_values[0])</code></pre>
+					</div>
+				</section>
+				<section class="record-section">
+					<h2>Experience replay</h2>
+					<p>
+						Once replay memory contains at least one full batch, the notebook samples 20
+						unique experiences, calculates the selected action target, fits the model,
+						and then decays exploration toward its minimum.
+					</p>
+					<div class="code-window">
+						<div class="editor-bar">
+							<span aria-hidden="true" class="window-dots">
+								<i></i>
+								<i></i>
+								<i></i>
+							</span>
+							<strong>experience_replay()</strong>
+							<span>DQN UPDATE</span>
+						</div>
+						<pre class="code-editor"><code>batch = random.sample(self.memory, BATCH_SIZE)
+
+for state, action, reward, state_next, terminal in batch:
+		q_update = reward
+		if not terminal:
+				q_update = reward + GAMMA * np.amax(
+						self.model.predict(state_next, verbose=0)[0]
+				)
+
+		q_values = self.model.predict(state, verbose=0)
+		q_values[0][action] = q_update
+		self.model.fit(state, q_values, verbose=0)
+
+self.exploration_rate *= EXPLORATION_DECAY
+self.exploration_rate = max(EXPLORATION_MIN, self.exploration_rate)</code></pre>
+					</div>
+				</section>
+				<section class="record-section">
+					<h2>Notebook compatibility</h2>
+					<p>
+						The maintained notebook accepts both the older Gym return shapes used by the
+						starter implementation and the newer Gymnasium-style reset/step return
+						shapes. This compatibility layer does not change the training constants,
+						reward inversion, replay placement, or model structure.
+					</p>
+					<div class="code-window">
+						<div class="editor-bar">
+							<span aria-hidden="true" class="window-dots">
+								<i></i>
+								<i></i>
+								<i></i>
+							</span>
+							<strong>cartpole.ipynb</strong>
+							<span>API ADAPTER</span>
+						</div>
+						<pre class="code-editor"><code>def reset_environment(env):
+		result = env.reset()
+		return result[0] if isinstance(result, tuple) else result
+
+def step_environment(env, action):
+		result = env.step(action)
+		if len(result) == 5:
+				state_next, reward, terminated, truncated, info = result
+				return state_next, reward, terminated or truncated, info
+		return result</code></pre>
+					</div>
+				</section>
+				<section class="record-section">
+					<h2>Source and attribution</h2>
+					<p>
+						The maintained
+						<code>Original/cartpole.ipynb</code>
+						is the original Python notebook linked from the public pages. Its DQN
+						starter lineage is credited to Grzegorz Surma's MIT-licensed CartPole
+						implementation, and the browser environment cites the Gym/Gymnasium CartPole
+						formulation.
+					</p>
+					<p>
+						The Python source includes
+						<code>scores.score_logger.ScoreLogger</code>
+						, which records scores, generates training charts, and applies the
+						established solve condition. Its upstream MIT-licensed lineage is cited in
+						the repository.
+					</p>
+					<div class="terminal-window">
+						<div class="terminal-bar">
+							<span>SOURCE STATUS</span>
+							<span>documented</span>
+						</div>
+						<pre><code><span class="ok">Maintained notebook:</span> Original/cartpole.ipynb
+<span class="ok">Attribution:</span> docs/third-party-notices.md
+<span class="prompt">Score logger:</span> Original/scores/score_logger.py</code></pre>
+					</div>
+				</section>
+			</article>
+		</main>
+		<footer data-site-footer=""></footer>
+		<script src="../assets/js/components/site-shell.js" type="module"></script>
+	</body>
+</html>

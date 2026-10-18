@@ -1,0 +1,37 @@
+/*
+  +----------------------------------------------------------------------------+
+  | CartPole Balance Lab — footer.css                                          |
+  | Purpose: Styles the shared footer component.                               |
+  | Author: Alysha Pursley                                                     |
+  | Copyright (c) 2026 Alysha Pursley.                                         |
+  +----------------------------------------------------------------------------+
+*/
+
+
+.site-footer {
+	display: grid;
+	grid-template-columns: 1fr auto auto;
+	align-items: center;
+	gap: 2rem;
+	padding: 2rem clamp(1rem, 4vw, 4rem);
+	background: var(--ink);
+	color: #fff;
+	border-top: 8px solid var(--coral);
+}
+
+.site-footer p {
+	margin: 0.25rem 0;
+	color: #adb5cd;
+}
+
+.footer-links {
+	display: flex;
+	gap: 0.7rem;
+	flex-wrap: wrap;
+}
+
+.footer-links a {
+	text-decoration: none;
+	color: var(--cyan);
+	font-weight: 850;
+}

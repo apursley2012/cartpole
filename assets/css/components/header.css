@@ -1,0 +1,94 @@
+/*
+  +----------------------------------------------------------------------------+
+  | CartPole Balance Lab — header.css                                          |
+  | Purpose: Styles the shared header component.                               |
+  | Author: Alysha Pursley                                                     |
+  | Copyright (c) 2026 Alysha Pursley.                                         |
+  +----------------------------------------------------------------------------+
+*/
+
+.site-header {
+	position: sticky;
+	top: 0;
+	z-index: 50;
+	display: grid;
+	grid-template-columns: minmax(250px, 0.8fr) minmax(0, 1.2fr);
+	align-items: center;
+	gap: clamp(1rem, 3vw, 3rem);
+	padding: 1rem clamp(1rem, 4vw, 4rem);
+	background: var(--night);
+	color: #fff;
+	border-bottom: 3px solid var(--ink);
+	box-shadow: 0 7px 0 var(--cyan), 0 10px 0 var(--ink);
+}
+
+.site-header::before {
+	content: "";
+	position: absolute;
+	inset: 0 0 auto;
+	height: 5px;
+	background: linear-gradient(
+		90deg,
+		var(--coral) 0 20%,
+		var(--cyan) 20% 40%,
+		var(--lime) 40% 60%,
+		var(--violet) 60% 80%,
+		var(--yellow) 80% 100%
+	);
+}
+
+.site-header .brand {
+	min-width: 0;
+	color: #fff;
+}
+
+.site-header .brand > span:last-child {
+	min-width: 0;
+	font-size: clamp(0.95rem, 1.4vw, 1.2rem);
+	line-height: 1.05;
+}
+
+.site-header .brand small {
+	color: var(--cyan);
+	font-size: 0.56rem;
+	letter-spacing: 0.16em;
+	line-height: 1.3;
+}
+
+.site-header .brand-mark {
+	flex: 0 0 50px;
+	width: 50px;
+	height: 50px;
+	border-color: #070b18;
+	box-shadow: 4px 4px 0 var(--coral);
+}
+
+@media (max-width: 1040px) {
+	.site-header {
+		grid-template-columns: 1fr;
+		gap: 0.8rem;
+	}
+}
+
+@media (max-width: 680px) {
+	.site-header {
+		grid-template-columns: 1fr auto;
+		align-items: stretch;
+		padding: 0.85rem 1rem 1rem;
+		box-shadow: 0 5px 0 var(--cyan), 0 8px 0 var(--ink);
+	}
+
+	.site-header .brand {
+		align-self: flex-start;
+	}
+
+	.site-header .brand-mark {
+		flex-basis: 44px;
+		width: 44px;
+		height: 44px;
+	}
+
+	.site-header noscript {
+		grid-column: 1 / -1;
+	}
+}

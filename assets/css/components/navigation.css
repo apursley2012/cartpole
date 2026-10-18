@@ -1,0 +1,102 @@
+/*
+  +----------------------------------------------------------------------------+
+  | CartPole Balance Lab — navigation.css                                      |
+  | Purpose: Styles the shared navigation component.                           |
+  | Author: Alysha Pursley                                                     |
+  | Copyright (c) 2026 Alysha Pursley.                                         |
+  +----------------------------------------------------------------------------+
+*/
+
+.site-header nav {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	gap: 0.5rem;
+	min-width: 0;
+}
+
+.site-header nav a {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 44px;
+	padding: 0.58rem 0.78rem;
+	color: #eef1fb;
+	border: 2px solid #4a557d;
+	border-radius: 12px;
+	background: #202747;
+	font-size: clamp(0.67rem, 0.85vw, 0.8rem);
+	line-height: 1.1;
+	text-align: center;
+	white-space: normal;
+}
+
+.site-header nav a:hover {
+	color: var(--ink);
+	border-color: var(--ink);
+	background: var(--cyan);
+	box-shadow: var(--hard-shadow-xs);
+}
+
+.site-header nav a[aria-current="page"] {
+	color: var(--ink);
+	border-color: var(--ink);
+	background: var(--coral);
+	box-shadow: var(--hard-shadow-sm);
+}
+
+.site-header nav .nav-source {
+	color: var(--ink);
+	border-color: var(--ink);
+	background: var(--lime);
+	box-shadow: var(--hard-shadow-sm);
+}
+
+.mobile-nav-toggle {
+	display: none;
+	min-width: 44px;
+	min-height: 44px;
+	border: 2px solid var(--cyan);
+	background: var(--night);
+	color: #fff;
+	font: inherit;
+	font-weight: 800;
+	cursor: pointer;
+}
+
+@media (max-width: 1040px) {
+	.site-header nav {
+		display: grid;
+		grid-template-columns: repeat(5, minmax(0, 1fr));
+		width: 100%;
+	}
+
+	.site-header nav a {
+		width: 100%;
+	}
+}
+
+@media (max-width: 680px) {
+	.mobile-nav-toggle {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.site-header nav {
+		display: none;
+		grid-column: 1 / -1;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 0.45rem;
+		width: 100%;
+	}
+
+	.site-header nav[data-open="true"],
+	.site-header noscript nav {
+		display: grid;
+	}
+
+	.site-header nav .nav-source {
+		grid-column: 1 / -1;
+	}
+}

@@ -1,482 +1,128 @@
-<!--
-File: README.md
-Document Title: CartPole Control Lab
-Author: Alysha Pursley
-Date: August 2026
--->
+# CartPole Web Demo
 
-<div align="center">
+**Author:** Alysha Pursley
 
-<h1>CartPole Control Lab 🧠</h1>
+This folder contains the fully static browser demo. It is intentionally separate
+from the maintained Python/Jupyter implementation in `../Original/`.
 
-<p><a href="https://github.com/apursley2012/cartpole/stargazers"><img src="https://img.shields.io/github/stars/apursley2012/cartpole?style=for-the-badge&amp;logo=github&amp;label=Stars" alt="Stars"></a> <a href="https://github.com/apursley2012/cartpole/forks"><img src="https://img.shields.io/github/forks/apursley2012/cartpole?style=for-the-badge&amp;logo=github&amp;label=Forks" alt="Forks"></a> <a href="https://github.com/apursley2012/cartpole/issues"><img src="https://img.shields.io/github/issues/apursley2012/cartpole?style=for-the-badge&amp;logo=github&amp;label=Issues" alt="Issues"></a> <a href="https://github.com/apursley2012/cartpole/commits"><img src="https://img.shields.io/github/last-commit/apursley2012/cartpole?style=for-the-badge&amp;logo=git&amp;label=Last%20Commit" alt="Last Commit"></a> <a href="https://github.com/apursley2012/cartpole"><img src="https://img.shields.io/github/repo-size/apursley2012/cartpole?style=for-the-badge&amp;logo=github&amp;label=Repo%20Size" alt="Repo Size"></a> <a href="https://github.com/apursley2012/cartpole"><img src="https://img.shields.io/github/languages/top/apursley2012/cartpole?style=for-the-badge&amp;label=Top%20Language" alt="Top Language"></a></p>
+## Run the demo
 
-<p><a href="https://apursley2012.github.io/cartpole/"><img src="https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-222222?style=for-the-badge&amp;logo=githubpages&amp;logoColor=white" alt="Live Demo"></a> <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&amp;logo=python&amp;logoColor=white" alt="Python"> <img src="https://img.shields.io/badge/Jupyter-F37626?style=for-the-badge&amp;logo=jupyter&amp;logoColor=white" alt="Jupyter"> <img src="https://img.shields.io/badge/Keras-D00000?style=for-the-badge&amp;logo=keras&amp;logoColor=white" alt="Keras"> <img src="https://img.shields.io/badge/NumPy-013243?style=for-the-badge&amp;logo=numpy&amp;logoColor=white" alt="NumPy"> <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&amp;logo=javascript&amp;logoColor=black" alt="JavaScript"></p>
+No package manager, build step, backend, database, or environment variables are
+required. Serve this folder with any static web server:
 
-<p><strong>An interactive CartPole reinforcement-learning project that explains the agent loop, exposes experiment controls and results, and preserves the original learning source alongside a browser-friendly control lab.</strong></p>
-
-<p><a href="https://apursley2012.github.io/cartpole/">Open the live project</a> · <a href="https://github.com/apursley2012/cartpole">View the repository</a> · <a href="https://github.com/apursley2012/cartpole/issues/new/choose">Report an issue or request an addition</a></p>
-
-</div>
-
----
-
-## Table of Contents 📖
-
-*   [Project Overview 🔎](#project-overview)
-    *   [Purpose 🎯](#purpose)
-    *   [Design Style and Inspiration 🎨](#design-style-and-inspiration)
-    *   [Main Color Palette 🌈](#main-color-palette)
-    *   [Preview Screenshots 🖼️](#preview-screenshots)
-*   [Key Features ✨](#key-features)
-*   [Tech Stack 🛠️](#tech-stack)
-*   [Live Demo 🚀](#live-demo)
-*   [Installation 📦](#installation)
-    *   [Local Use 💻](#local-use)
-    *   [GitHub Pages Deployment 🌐](#github-pages-deployment)
-*   [Usage 🧭](#usage)
-*   [Project Structure 🗂️](#project-structure)
-    *   [Pages Included 📄](#pages-included)
-    *   [Core Files and Architecture 🧩](#core-files-and-architecture)
-    *   [File and Folder Structure 🌳](#file-and-folder-structure)
-*   [Reinforcement-Learning Model 🤖](#reinforcementlearning-model)
-*   [Customization Guide 🎨](#customization-guide)
-*   [Accessibility and Browser Compatibility ♿](#accessibility-and-browser-compatibility)
-*   [Repository Relationship 🔗](#repository-relationship)
-*   [Project Scope and Limitations 📌](#project-scope-and-limitations)
-*   [Possible Future Enhancements 💡](#possible-future-enhancements)
-*   [Contributing 🤝](#contributing)
-    *   [Reporting Issues 🐛](#reporting-issues)
-    *   [Requesting Additions 📝](#requesting-additions)
-*   [License 📜](#license)
-*   [Important Links 🔗](#important-links)
-*   [Attribution ℹ️️](#attribution)
-
----
-
-<a id="project-overview"></a>
-
-<details open>
-<summary><h2><strong>Project Overview 🔎</strong></h2></summary>
-
-
-
-
-
-**CartPole Control Lab** is a reinforcement-learning project that makes agent behavior easier to inspect through both the underlying learning implementation and a visual presentation of the control problem. The environment is intentionally simple enough to follow while still exposing the core challenges of balancing state, action, reward, exploration, and stability.
-
-I built the project so the learning process is not hidden behind a final score. The supporting Python and notebook work documents the model, replay behavior, and experiments, while the browser-facing material gives the problem a clearer visual explanation and makes the relationship between state changes and control decisions easier to follow.
-
-Keeping both sides together makes the project useful as an engineering artifact rather than only a demo. The source shows how the agent is trained and evaluated, and the presentation layer helps communicate what that work is doing and why the control task matters.
-
-</details>
-
-<a id="purpose"></a>
-
-<details open>
-<summary><h3><strong>Purpose 🎯</strong></h3></summary>
-
-
-
-
-I created **CartPole Control Lab** to make reinforcement-learning behavior easier to observe and understand while still keeping the working learning implementation connected to the project. CartPole is useful because a simple control problem exposes the decisions an agent has to make around state, action, reward, exploration, replay memory, and stability. The browser experience gives those ideas a clear visual presentation, while the original source remains available for the actual learning and experimentation behind the results.
-</details>
-
-<a id="design-style-and-inspiration"></a>
-
-<details open>
-<summary><h3><strong>Design Style and Inspiration 🎨</strong></h3></summary>
-
-
-
-CartPole Control Lab is styled as an interactive experiment console. Dark navy creates the lab and simulation shell, cream and paper keep explanations readable, and coral, cyan, lime, yellow, violet, and blue divide controls, metrics, state information, and feedback. The bold treatment makes the experiment memorable, but it stays centered on the learning problem: balancing the pole, observing state changes, comparing control behavior, and connecting the simulation to reinforcement-learning concepts.
-
-</details>
-
-<a id="main-color-palette"></a>
-
-<details open>
-<summary><h3><strong>Main Color Palette 🌈</strong></h3></summary>
-
-
-
-
-
-I pulled the palette below directly from the current project stylesheet `assets/css/styles.css`.
-
-Each row lists every interface-use category identified for that exact color value in the documented stylesheet analysis. When one hex value is reused for several jobs, I keep all of those uses together in the same row instead of reducing it to a single generic label.
-
-| Hex | Color Name | Complete Use in the Interface |
-| --- | --- | --- |
-| `#11172B` | Ink Navy | Primary text; borders; hard shadows; and structural outlines |
-| `#171D36` | Night | Main experiment and control surfaces |
-| `#202747` | Night Blue | Secondary dark panels and headers |
-| `#F7F1DF` | Cream | Main page background |
-| `#FFFDF6` | Paper | Cards; simulation canvas; and light control surfaces |
-| `#FF5F57` | Coral | Primary controls and strong experiment accents |
-| `#54D8E5` | Cyan | State; control; and simulation highlights |
-| `#C9F45B` | Lime | Status; success; and high-visibility metrics |
-| `#A78BFA` | Violet | Secondary metric and decorative accent |
-| `#FFD65A` | Yellow | Controls and highlighted technical details |
-| `#4E78FF` | Blue | Labels and supporting technical emphasis |
-| `#687086` | Muted Slate | Secondary text |
-| `#CFD3DE` | Line Gray | Borders and separators |
-
-</details>
-
-<a id="preview-screenshots"></a>
-
-<details open>
-<summary><h3><strong>Preview Screenshots 🖼️</strong></h3></summary>
-
-
-
-Click any preview image in the repository screenshot folder to open the full-size file.
-
-
-#### 🖼️ Screenshot Gallery
-
-
-The gallery uses paired, centered images when screenshots are present. Keep screenshots under `images/screenshots/` and use names such as `cartpole-screenshot-01.png`, `cartpole-screenshot-02.png`, and so on. I have not invented image filenames that were not verified in the current project source.
-
-</details>
-
----
-
-<a id="key-features"></a>
-
-<details open>
-<summary><h2><strong>Key Features ✨</strong></h2></summary>
-
-
-
-*   **Explain the CartPole state, action, and reward loop**
-*   **Visualize or simulate the cart-and-pole control problem in the browser**
-*   **Document Deep Q-Learning concepts and experience replay**
-*   **Show experiment settings and training/result information**
-*   **Include score/history material from the learning runs**
-*   **Preserve original notebook/source files**
-*   **Provide a case study and article-style explanation**
-*   **Publish the explanatory interface through GitHub Pages**
-
-</details>
-
----
-
-<a id="tech-stack"></a>
-
-<details open>
-<summary><h2><strong>Tech Stack 🛠️</strong></h2></summary>
-
-
-
-*   **HTML**
-*   **CSS**
-*   **JavaScript**
-*   **Python source**
-*   **Jupyter Notebook**
-*   **Reinforcement-learning / Deep Q-Learning source and experiment data**
-
-</details>
-
----
-
-<a id="live-demo"></a>
-
-<details open>
-<summary><h2><strong>Live Demo 🚀</strong></h2></summary>
-
-
-
-Open the published project here:
-
-[https://apursley2012.github.io/cartpole/](https://apursley2012.github.io/cartpole/)
-
-</details>
-
----
-
-<a id="installation"></a>
-
-<details open>
-<summary><h2><strong>Installation 📦</strong></h2></summary>
-
-
-
-</details>
-
-<a id="local-use"></a>
-
-<details open>
-<summary><h3><strong>Local Use 💻</strong></h3></summary>
-
-
-
-1. Clone or download the repository.
-2. Keep the existing folder structure intact so the page can still find its styles, scripts, data, and assets.
-3. Open the root `index.html` for static projects, or follow the project-specific runtime instructions when a backend/source application is included.
-4. Before I publish changes, I check the main workflow, navigation, saved browser data where it applies, and the responsive layout.
-
-</details>
-
-<a id="github-pages-deployment"></a>
-
-<details open>
-<summary><h3><strong>GitHub Pages Deployment 🌐</strong></h3></summary>
-
-
-
-For the static/public portion, keep `index.html` at the repository root, use relative asset paths, then enable **Settings → Pages → Deploy from a branch → main → / (root)**. Projects that include Python, Node, MongoDB, authentication, browser automation, or another server runtime still need an appropriate backend host for those server-dependent features.
-
-</details>
-
----
-
-<a id="usage"></a>
-
-<details open>
-<summary><h2><strong>Usage 🧭</strong></h2></summary>
-
-
-
-Start with the main page and follow the project’s primary workflow. The interface is intended to be usable without reading the source first, while the case studies, articles, documentation, and source folders provide the deeper implementation context. Where browser storage is used, saved information belongs to that browser/device unless the project explicitly includes a shared backend.
-
-</details>
-
----
-
-<a id="project-structure"></a>
-
-<details open>
-<summary><h2><strong>Project Structure 🗂️</strong></h2></summary>
-
-
-
-</details>
-
-<a id="pages-included"></a>
-
-<details open>
-<summary><h3><strong>Pages Included 📄</strong></h3></summary>
-
-
-
-| Page / Area | Purpose |
-| --- | --- |
-| `index.html` | Interactive browser control lab |
-| `case-study.html` | Detailed project case study |
-| `article.html` | Plain-language reinforcement-learning article |
-| `css/` | Interface styling |
-| `js/` | Browser interaction and visualization logic |
-| `data/` | Result or experiment data used by the public experience |
-| `docs/` | Supporting documentation |
-| `source/` | Original learning/notebook source |
-
-</details>
-
-<a id="core-files-and-architecture"></a>
-
-<details open>
-<summary><h3><strong>Core Files and Architecture 🧩</strong></h3></summary>
-
-
-
-The repository separates the public interface from supporting source and documentation where the project needs that distinction. The important rule is that **CartPole Control Lab should be documented as the project it is**, not as a generic theme or one-size-fits-all site. Files that implement the main workflow belong with the application, while case studies, articles, source history, data, or backend code are documented according to their real role.
-
-</details>
-
-<a id="file-and-folder-structure"></a>
-
-<details open>
-<summary><h3><strong>File and Folder Structure 🌳</strong></h3></summary>
-
-
-
-```text
-cartpole/
-├── README.md
-├── index.html
-├── case-study.html
-├── article.html
-├── css/
-├── js/
-├── data/
-├── docs/
-└── source/
+```bash
+cd web-demo
+python3 -m http.server 8000
 ```
 
-This tree highlights the major documented areas rather than inventing files that were not verified.
-
-</details>
-
----
-
-<a id="reinforcementlearning-model"></a>
-
-<details open>
-<summary><h2><strong>Reinforcement-Learning Model 🤖</strong></h2></summary>
-
-
-
-CartPole is a control problem with a compact state but a continuous stream of decisions. The agent observes values describing the cart and pole, chooses an action, receives the next state and reward, and gradually updates its policy from experience. The project explains those pieces separately so “the AI learned it” is not used as a substitute for the actual loop.
-
-The browser experience is for inspection and interaction. Any original Python training behavior, neural-network updates, replay memory, or recorded run data remains identified as source-side reinforcement-learning work rather than being silently replaced by a scripted animation.
-
-</details>
-
----
-
-<a id="customization-guide"></a>
-
-<details open>
-<summary><h2><strong>Customization Guide 🎨</strong></h2></summary>
-
-
-
-The safest way to customize or extend **CartPole Control Lab** is to preserve its existing workflow first, then change one layer at a time. Update project content and data in the files that already own that information, keep visual changes inside the existing style system, and test every page that shares the changed component or data source. New features should solve a problem that belongs to this project instead of copying a feature from an unrelated application.
-
-For visual changes, update the documented palette intentionally and re-check contrast, responsive spacing, screenshots, and any state colors that depend on the same variables. For data or logic changes, test both the normal path and empty/error/edge cases before publishing.
-
-</details>
-
----
-
-<a id="accessibility-and-browser-compatibility"></a>
-
-<details open>
-<summary><h2><strong>Accessibility and Browser Compatibility ♿</strong></h2></summary>
-
-
-
-The public interface should remain keyboard-navigable, readable at common mobile and desktop widths, and usable without relying on color alone to communicate state. Form controls should keep visible labels or accessible names, images should use meaningful `alt` text, focus indicators should remain visible, and decorative animation should respect reduced-motion preferences when motion is present. Browser compatibility should be checked in current Safari, Chrome, Firefox, and Edge where practical.
-
-</details>
-
----
-
-<a id="repository-relationship"></a>
-
-<details open>
-<summary><h2><strong>Repository Relationship 🔗</strong></h2></summary>
-
-
-
-**CartPole Control Lab** is documented as its own project. Supporting case studies, articles, source history, static presentation layers, or backend/runtime folders are parts of this repository only when they help explain or run this project. They should not be described as separate replacement projects.
-
-Where this repository contains both a static GitHub Pages layer and source that requires another runtime, the two are related but not interchangeable: the static layer provides the public experience that can run in a browser, while the source/runtime layer preserves functionality that GitHub Pages cannot execute directly.
-
-</details>
-
----
-
-<a id="project-scope-and-limitations"></a>
-
-<details open>
-<summary><h2><strong>Project Scope and Limitations 📌</strong></h2></summary>
-
-
-
-This README separates what the published browser version can do from functionality that belongs to a backend, database, native application, notebook, or other runtime. Static hosting limitations are stated where they materially affect the project. The documentation should not imply that GitHub Pages is providing server-side authentication, Python execution, MongoDB access, SMS delivery, or another service it cannot actually run.
-
-</details>
-
----
-
-<a id="possible-future-enhancements"></a>
-
-<details open>
-<summary><h2><strong>Possible Future Enhancements 💡</strong></h2></summary>
-
-
-
-*   Add side-by-side comparison of different exploration settings
-*   Add clearer run-to-run score visualizations
-*   Allow reproducible experiment presets
-*   Add automated checks for any browser simulation and data-loading logic
-
-</details>
-
----
-
-<a id="contributing"></a>
-
-<details open>
-<summary><h2><strong>Contributing 🤝</strong></h2></summary>
-
-
-
-Contributions, bug reports, and practical improvement suggestions are welcome when they preserve the existing project direction and do not replace its identity with a generic redesign.
-
-</details>
-
-<a id="reporting-issues"></a>
-
-<details open>
-<summary><h3><strong>Reporting Issues 🐛</strong></h3></summary>
-
-
-
-When reporting a problem, include the page or workflow involved, what you expected, what actually happened, browser/device information when relevant, and a screenshot if the issue is visual.
-
-</details>
-
-<a id="requesting-additions"></a>
-
-<details open>
-<summary><h3><strong>Requesting Additions 📝</strong></h3></summary>
-
-
-
-Feature requests should explain the user problem the addition would solve and how it fits the existing project. Project-specific improvements are preferred over adding features only because they are common in other applications.
-
-</details>
-
----
-
-<a id="license"></a>
-
-<details open>
-<summary><h2><strong>License 📜</strong></h2></summary>
-
-
-
-No license terms are assumed here. If the repository includes a `LICENSE` file, that file controls reuse. If it does not, normal copyright applies and permission should not be inferred from the repository being public.
-
-</details>
-
----
-
-<a id="important-links"></a>
-
-<details open>
-<summary><h2><strong>Important Links 🔗</strong></h2></summary>
-
-
-
-*   **Live Project:** [https://apursley2012.github.io/cartpole/](https://apursley2012.github.io/cartpole/)
-*   **Repository:** [https://github.com/apursley2012/cartpole](https://github.com/apursley2012/cartpole)
-*   **Issues / Requests:** [https://github.com/apursley2012/cartpole/issues/new/choose](https://github.com/apursley2012/cartpole/issues/new/choose)
-
-</details>
-
----
-
-<a id="attribution"></a>
-
-<details open>
-<summary><h2><strong>Attribution ℹ️</strong></h2></summary>
-
-
-Project documentation and original project materials are credited to their respective sources where applicable.
-
-</details>
-
----
-
-<div align=center>
-   
-***Made with ❤️ and a bit of 🪄.***
-<br>
-**©️ 2026 Alysha Pursley. All Rights Reserved.**
-
-</div>
+## Maintainability structure
+
+The demo uses native ES modules and CSS imports so reusable concepts have one
+implementation without introducing a framework or build system.
+
+```text
+web-demo/
+├── index.html                  # static-host redirect
+├── 404.html                    # host-level error page
+├── pages/                      # content and legal HTML pages
+├── assets/
+│   ├── css/
+│   │   ├── shared.css
+│   │   ├── tokens.css
+│   │   ├── base.css
+│   │   ├── components/         # header, navigation, cards, etc.
+│   │   └── pages/              # page-specific styles
+│   └── js/
+│       ├── components/         # brand, navigation, shell, paths
+│       ├── app.js
+│       ├── cartpole-env.js
+│       ├── config.js
+│       ├── dqn-agent.js
+│       └── replay-buffer.js
+└── manifest.webmanifest
+```
+
+`site-shell.js` composes the shared header and footer modules; `brand.js`, `navigation.js`, `site-header.js`, and `site-footer.js` own their respective markup and behavior.
+The HTML pages provide only shell mount points plus page-specific content.
+
+Shared visual concepts are split by responsibility. `brand.css` owns CartPole
+brand/illustration geometry, `header.css` and `navigation.css` own header and primary navigation presentation,
+`footer.css` owns the footer, and `content.css` owns genuinely reusable content
+patterns such as article cards, formula cards, article action groups, and code
+presentation. `tokens.css` and `base.css` provide the shared foundation.
+
+Page CSS is used only when a rule belongs to one page or one page-specific
+feature. A component is not extracted merely because two selectors happen to
+look alike; extraction is for the same conceptual structure or behavior reused
+in multiple places.
+
+## Same component, different page styling
+
+Keep the component's structure and base rules in its shared component file, then
+apply a page-level variant through a page class or modifier.
+
+For example, the same conceptual card can keep one `.article-card` base while a
+page changes only its accent:
+
+```css
+.article-card {
+  background: var(--paper);
+  border: 3px solid var(--ink);
+}
+
+.page-case-study .article-card {
+  --card-accent: var(--coral);
+}
+
+.page-technical-article .article-card {
+  --card-accent: var(--cyan);
+}
+```
+
+For a reusable component with several intentional variants, prefer modifier
+classes such as `.card--coral` or `.card--compact`. Do not copy the complete
+component into multiple page stylesheets just to change color, spacing, or one
+small visual detail.
+
+## Original project
+
+The Python/Jupyter source, dependencies, score logger, and required third-party
+notices live only in `../Original/`. Public pages link to the maintained
+notebook there. These links work when the **parent CartPole directory** is published or
+served, so that both `web-demo/` and `Original/` are accessible.
+Serving only `web-demo/` locally displays the interactive demo but cannot serve
+files in its sibling `Original/` folder. To test notebook navigation
+locally, run `python3 -m http.server 8000` from the parent CartPole directory and open
+`http://localhost:8000/Updated/web-demo/`.
+
+## Prelaunch hardening
+
+The prelaunch review adds a branded 404 page, crawlable `robots.txt`, favicon and
+manifest assets, social-preview metadata/artwork, skip links, a responsive mobile
+navigation control, a no-JavaScript navigation fallback, a restrictive meta CSP,
+privacy information, and an accessibility statement.
+
+The repository-level `docs/prelaunch-checklist-audit.md` separates checks that
+are verifiable in source from checks that require the final production domain,
+hosting configuration, real devices/browsers, assistive technology, or field
+performance data. Absolute canonical URLs and an XML sitemap are intentionally
+not fabricated before the production origin is known.
+
+
+## Componentized page architecture
+
+The browser demo now follows the requested page/component separation explicitly:
+
+- `pages/*.html` contains every actual content/legal page: Demo, Case Study, Articles, Development Record, Privacy, and Accessibility.
+- Root `index.html` is only the static-host entry redirect to `pages/index.html`; it is not a duplicate content implementation.
+- Root `404.html` is the one deliberate page-location exception because static hosts commonly require the custom error document at the site root.
+- `assets/js/components/brand.js` owns reusable logo/brand markup.
+- `assets/js/components/navigation.js` owns menu/navigation data and current-page state.
+- `assets/js/components/site-header.js` owns the shared header and mobile-menu behavior.
+- `assets/js/components/site-footer.js` owns the shared footer.
+- `assets/js/components/paths.js` owns page-aware relative paths.
+- `assets/js/components/site-shell.js` is only the small composition entry point.
+- `assets/css/components/brand.css`, `header.css`, `navigation.css`, `footer.css`, `cards.css`, and `accessibility.css` give those reusable concepts focused style ownership.
+- `assets/css/pages/*.css` remains reserved for genuinely page-specific presentation instead of duplicating shared components.
+
+There is no tabs component because this project has no tabbed interface. A placeholder tabs file would violate the requirement to avoid abstractions that do not improve maintainability.

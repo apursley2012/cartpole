@@ -1,0 +1,137 @@
+/*
+  +----------------------------------------------------------------------------+
+  | CartPole Balance Lab — brand.css                                           |
+  | Purpose: Styles the shared brand component.                                |
+  | Author: Alysha Pursley                                                     |
+  | Copyright (c) 2026 Alysha Pursley.                                         |
+  +----------------------------------------------------------------------------+
+*/
+
+
+.brand {
+	display: flex;
+	align-items: center;
+	gap: 0.9rem;
+	text-decoration: none;
+	font-weight: 950;
+	letter-spacing: -0.03em;
+}
+
+.brand small {
+	display: block;
+	font-size: 0.58rem;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+	color: var(--muted);
+	margin-bottom: 0.1rem;
+}
+
+.brand-mark {
+	position: relative;
+	width: 48px;
+	height: 48px;
+	display: grid;
+	place-items: center;
+	background: var(--cyan);
+	border: 3px solid var(--ink);
+	border-radius: 14px;
+	box-shadow: var(--hard-shadow-sm);
+	overflow: hidden;
+}
+
+/*
+ * The header mark reuses the same CartPole geometry as the DQN profile.
+ * The full construction is centered inside the mark, then scaled as one unit.
+ */
+.brand-mark .cartpole-icon {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%) scale(0.21);
+	transform-origin: center;
+}
+
+/*
+ * Shared CartPole illustration geometry mirrors the live Canvas cart: the
+ * 156:74 body, wheel spacing, centered pivot, and pole proportions scale
+ * together instead of using a separate stylized cart construction.
+ */
+.cartpole-icon,
+.mini-pole {
+	--cart-body-width: 156px;
+	--cart-body-height: 74px;
+	--cart-wheel-size: 42px;
+	--cart-pivot-size: 42px;
+	--cart-pole-width: 18px;
+	--cart-pole-height: 90px;
+}
+
+.mini-pole i,
+.cartpole-icon i {
+	position: absolute;
+	left: 0;
+	bottom: 21px;
+	width: var(--cart-body-width);
+	height: var(--cart-body-height);
+	background: var(--coral);
+	border-radius: 20px;
+}
+
+.mini-pole i:before,
+.mini-pole i:after,
+.cartpole-icon i:before,
+.cartpole-icon i:after {
+	content: "";
+	position: absolute;
+	bottom: -29px;
+	width: var(--cart-wheel-size);
+	height: var(--cart-wheel-size);
+	box-sizing: border-box;
+	background:
+	radial-gradient(circle, var(--paper) 0 8px, var(--ink) 9px 100%);
+	border-radius: 50%;
+}
+
+.mini-pole i:before,
+.cartpole-icon i:before {
+	left: 2px;
+}
+
+.mini-pole i:after,
+.cartpole-icon i:after {
+	right: 2px;
+}
+
+.mini-pole b,
+.cartpole-icon b {
+	position: absolute;
+	left: 69px;
+	bottom: 95px;
+	width: var(--cart-pole-width);
+	height: var(--cart-pole-height);
+	background: var(--yellow);
+	transform: rotate(10deg);
+	transform-origin: 50% 100%;
+	border-radius: 9px;
+}
+
+.mini-pole em,
+.cartpole-icon em {
+	position: absolute;
+	left: 57px;
+	bottom: 74px;
+	width: var(--cart-pivot-size);
+	height: var(--cart-pivot-size);
+	box-sizing: border-box;
+	background:
+	radial-gradient(circle, var(--paper) 0 8px, var(--ink) 9px 100%);
+	border-radius: 50%;
+}
+
+.cartpole-icon {
+	position: relative;
+	display: block;
+	width: 156px;
+	height: 150px;
+	transform-origin: center;
+}

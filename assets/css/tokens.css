@@ -1,0 +1,47 @@
+/*
+  +----------------------------------------------------------------------------+
+  | CartPole Balance Lab — tokens.css                                          |
+  | Purpose: Defines shared design tokens.                                     |
+  | Author: Alysha Pursley                                                     |
+  | Copyright (c) 2026 Alysha Pursley.                                         |
+  +----------------------------------------------------------------------------+
+*/
+
+
+:root {
+
+	--ink: #11172b;
+	--night: #171d36;
+	--night-2: #202747;
+	--cream: #f7f1df;
+	--paper: #fffdf6;
+	--coral: #ff5f57;
+	--cyan: #54d8e5;
+	--lime: #c9f45b;
+	--violet: #a78bfa;
+	--yellow: #ffd65a;
+	--blue: #4e78ff;
+	--muted: #687086;
+	--line: #cfd3de;
+
+
+	--canvas-border: #050813;
+	--stage-surface: #0e1326;
+	--panel-border: #414b73;
+	--state-border: #394363;
+	--state-muted: #8f9abc;
+
+
+	--text-micro: 0.6rem;
+	--text-caption: 0.65rem;
+	--text-small: 0.7rem;
+	--text-ui: 0.8rem;
+
+
+	--hard-shadow-xs: 3px 3px 0 var(--ink);
+	--hard-shadow-sm: 4px 4px 0 var(--ink);
+	--hard-shadow-md: 5px 5px 0 var(--ink);
+	--hard-shadow-lg: 7px 7px 0 var(--ink);
+	--hard-shadow-xl: 8px 8px 0 var(--ink);
+	--hard-shadow: 10px 10px 0 var(--ink);
+}

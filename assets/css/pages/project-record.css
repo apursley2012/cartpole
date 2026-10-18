@@ -1,0 +1,125 @@
+/*
+  +----------------------------------------------------------------------------+
+  | CartPole Balance Lab — project-record.css                                  |
+  | Purpose: Styles the project record page.                                   |
+  | Author: Alysha Pursley                                                     |
+  | Copyright (c) 2026 Alysha Pursley.                                         |
+  +----------------------------------------------------------------------------+
+*/
+
+.record-section {
+	margin-top: 3rem;
+}
+
+/*
+ *
+ */
+
+/*
+ *
+ */
+
+.configuration-grid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 1.25rem;
+	margin: 2rem 0 3rem;
+}
+
+.configuration-card {
+	position: relative;
+	min-height: 210px;
+	margin: 0;
+	padding: 1.35rem;
+	border: 3px solid var(--ink);
+	border-radius: 22px;
+	box-shadow: var(--hard-shadow-lg);
+	overflow: hidden;
+}
+
+.configuration-card:after {
+	content: "";
+	position: absolute;
+	width: 105px;
+	height: 105px;
+	right: -42px;
+	bottom: -48px;
+	border: 16px solid #11172B1A;
+	border-radius: 50%;
+}
+
+.configuration-card span {
+	display: block;
+	margin-bottom: 0.65rem;
+	font-size: var(--text-caption);
+	font-weight: 950;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+}
+
+.configuration-card strong {
+	display: block;
+	max-width: 90%;
+	font-size: clamp(2rem, 4vw, 3.7rem);
+	line-height: 1;
+	letter-spacing: -0.055em;
+}
+
+.article-card .configuration-card p {
+	position: relative;
+	z-index: 1;
+	margin: 1rem 0 0;
+	max-width: 34rem;
+	color: var(--ink);
+	font-weight: 750;
+	line-height: 1.55;
+}
+
+.config-coral {
+	background: var(--coral);
+}
+
+.config-cyan {
+	background: var(--cyan);
+}
+
+.config-lime {
+	background: var(--lime);
+}
+
+.config-violet {
+	background: var(--violet);
+}
+
+.config-yellow {
+	background: var(--yellow);
+}
+
+.config-blue {
+	background: var(--blue);
+	color: #fff;
+}
+
+.article-card .config-blue p {
+	color: #fff;
+}
+
+.config-blue:after {
+	border-color: #FFFFFF29;
+}
+
+@media (max-width:700px) {
+	.configuration-grid {
+		grid-template-columns: 1fr;
+		gap: 1rem;
+	}
+
+	.configuration-card {
+		min-height: 175px;
+		padding: 1.1rem;
+	}
+
+	.configuration-card strong {
+		font-size: clamp(2rem, 12vw, 3.2rem);
+	}
+}

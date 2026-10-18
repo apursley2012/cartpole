@@ -2,7 +2,7 @@
 <!--
   +----------------------------------------------------------------------------+
   | CartPole Balance Lab — 404.html                                            |
-  | Purpose: Provides a repository-root not-found fallback.                    |
+  | Purpose: Displays the browser demo not-found page.                         |
   | Author: Alysha Pursley                                                     |
   | Copyright (c) 2026 Alysha Pursley.                                         |
   +----------------------------------------------------------------------------+
@@ -10,14 +10,39 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta name="robots" content="noindex">
-		<title>Page Not Found | CartPole</title>
+		<meta content="width=device-width, initial-scale=1" name="viewport">
+		<meta content="noindex" name="robots">
+		<meta content="#171d36" name="theme-color">
+		<title>Page Not Found | CartPole Balance Lab</title>
+		<link href="./favicon.ico" rel="icon" sizes="any">
+		<link href="./assets/css/shared.css" rel="stylesheet">
+		<meta content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self'" http-equiv="Content-Security-Policy">
 	</head>
-	<body>
-		<main>
-			<h1>Page not found</h1>
-			<p>The requested page is unavailable. <a href="./web-demo/">Return to the CartPole demo</a>.</p>
+	<body class="page-not-found">
+		<a class="skip-link" href="#main-content">Skip to main content</a>
+		<header data-site-header=""></header>
+		<noscript>
+			<nav class="noscript-nav" aria-label="Primary navigation without JavaScript">
+				<a href="./pages/index.html">Demo</a>
+				<a href="./pages/case-study.html">Case Study</a>
+				<a href="./pages/article.html">Articles</a>
+				<a href="./pages/project-record.html">Development Record</a>
+			</nav>
+		</noscript>
+		<main class="article-shell" id="main-content">
+			<article class="article-card">
+				<p class="eyebrow">404 // Route not found</p>
+				<h1>That page is outside the track.</h1>
+				<p>
+					The requested page does not exist. Return to the interactive CartPole demo or
+					use the primary navigation.
+				</p>
+				<div class="article-actions">
+					<a href="./pages/index.html">Return to the Live Demo</a>
+				</div>
+			</article>
 		</main>
+		<footer data-site-footer=""></footer>
+		<script src="./assets/js/components/site-shell.js" type="module"></script>
 	</body>
 </html>

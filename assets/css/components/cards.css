@@ -1,0 +1,162 @@
+/*
+  +----------------------------------------------------------------------------+
+  | CartPole Balance Lab — cards.css                                           |
+  | Purpose: Styles the shared cards component.                                |
+  | Author: Alysha Pursley                                                     |
+  | Copyright (c) 2026 Alysha Pursley.                                         |
+  +----------------------------------------------------------------------------+
+*/
+
+.formula-card {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+	flex-wrap: wrap;
+	margin-top: 1rem;
+	padding: 1.25rem;
+	background: var(--night);
+	color: #fff;
+	border: 3px solid var(--ink);
+	border-radius: 18px;
+}
+
+.formula-card span {
+	display: block;
+	font-size: var(--text-caption);
+	letter-spacing: 0.15em;
+	font-weight: 950;
+	color: var(--cyan);
+}
+
+.formula-card small {
+	color: #aeb7d0;
+}
+
+.formula-card code {
+	background: #0b1020;
+	color: var(--lime);
+	border: 1px solid #3b4569;
+	border-radius: 10px;
+	padding: 0.85rem 1rem;
+	overflow: auto;
+}
+
+
+.article-shell {
+	position: relative;
+	width: min(1180px, 100%);
+	margin: 0 auto;
+	padding: clamp(3rem, 7vw, 7rem) clamp(1rem, 4vw, 3rem);
+}
+
+.article-shell.wide {
+	width: min(1420px, 100%);
+}
+
+.article-card {
+	position: relative;
+	background: var(--paper);
+	border: 3px solid var(--ink);
+	border-radius: 32px;
+	padding: clamp(1.4rem, 5vw, 4rem);
+	box-shadow: 16px 16px 0 var(--ink);
+	overflow: hidden;
+}
+
+.article-card:before {
+	content: "";
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	height: 13px;
+	background: linear-gradient(
+		90deg,
+		var(--coral) 0 20%,
+		var(--cyan) 20% 40%,
+		var(--lime) 40% 60%,
+		var(--violet) 60% 80%,
+		var(--yellow) 80%
+		);
+}
+
+.article-card h1 {
+	font-size: clamp(3.2rem, 8vw, 7.5rem);
+	line-height: 0.86;
+	letter-spacing: -0.075em;
+	max-width: 13ch;
+	margin-top: 1rem;
+}
+
+.article-card h2 {
+	margin-top: 3rem;
+	font-size: clamp(2rem, 4vw, 3.5rem);
+	letter-spacing: -0.045em;
+}
+
+.article-card h3 {
+	font-size: 1.35rem;
+	margin-top: 2rem;
+}
+
+.article-card p,
+.article-card li {
+	line-height: 1.8;
+	color: #4f586f;
+}
+
+.article-card .lead {
+	font-size: 1.2rem;
+}
+
+.article-card code,
+.article-card pre {
+	background: var(--night);
+	color: var(--lime);
+	border-radius: 12px;
+}
+
+.article-card code {
+	padding: 0.2rem 0.45rem;
+}
+
+.article-card pre {
+	padding: 1rem;
+	overflow: auto;
+}
+
+.article-card table {
+	width: 100%;
+	border-collapse: collapse;
+	background: #fff;
+	border: 2px solid var(--ink);
+}
+
+.article-card th,
+.article-card td {
+	padding: 0.85rem;
+	border-bottom: 1px solid var(--line);
+	text-align: left;
+}
+
+.article-card th {
+	background: var(--yellow);
+}
+
+.article-actions {
+	display: flex;
+	gap: 0.8rem;
+	flex-wrap: wrap;
+	margin-top: 2rem;
+}
+
+.article-actions a {
+	text-decoration: none;
+	background: var(--coral);
+	border: 3px solid var(--ink);
+	border-radius: 12px;
+	padding: 0.75rem 1rem;
+	font-weight: 900;
+	box-shadow: var(--hard-shadow-sm);
+}
